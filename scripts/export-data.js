@@ -57,13 +57,21 @@ async function exportAll() {
   console.log('🌲 Exporting static geospatial assets for GGF GeoHub...');
   const layersList = [];
 
-  for (const [id, config] of Object.entries(LAYER_CONFIG)) {
+  const shpFiles = fs.readdirSync(SHP_DIR).filter(f => f.toLowerCase().endsWith('.shp'));
+
+  for (const shpFile of shpFiles) {
+    const id = path.parse(shpFile).name;
+    const config = LAYER_CONFIG[id] || {
+      name: id.replace(/_/g, ' '),
+      project: 'Green Gold Forestry',
+      category: 'Capas Espaciales',
+      description: `Capa vectorial (${id.replace(/_/g, ' ')})`,
+      color: '#10b981',
+      tags: ['GGF', 'Cartografía', 'Vectorial']
+    };
+
     const shpPath = path.join(SHP_DIR, `${id}.shp`);
     const dbfPath = path.join(SHP_DIR, `${id}.dbf`);
-    if (!fs.existsSync(shpPath)) {
-      console.warn(`Shapefile ${id}.shp not found in SHP directory.`);
-      continue;
-    }
 
     console.log(`Processing layer: ${id}...`);
     const geojson = await readShapefileToGeoJSON(shpPath, dbfPath);
