@@ -8,7 +8,8 @@
     "server": "node server/index.js",
     "client": "npm --prefix client run dev",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "build": "npm --prefix client install && npm --prefix client run build",
+    "export:data": "node scripts/export-data.js",
+    "build": "node scripts/export-data.js && npm --prefix client install && npm --prefix client run build",
     "build:client": "npm --prefix client run build",
     "start": "node server/index.js"
   },

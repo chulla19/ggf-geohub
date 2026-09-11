@@ -31,6 +31,8 @@ import {
   FileText
 } from 'lucide-react';
 
+import { fetchGeoJsonData, getDownloadUrl } from '../utils/api';
+
 // Proj4 definitions for UTM Zone 18S & WGS84
 const utm18sDef = "+proj=utm +zone=18 +south +datum=WGS84 +units=m +no_defs";
 const wgs84Def = "+proj=longlat +datum=WGS84 +no_defs";
@@ -159,7 +161,7 @@ export default function MapViewer({ layers, initialFocusLayerId }) {
 
   // Copy direct download URL to clipboard
   const handleCopyDirectLink = (layerId) => {
-    const url = `${window.location.origin}/api/layers/${layerId}/download?format=shp`;
+    const url = `${window.location.origin}${getDownloadUrl(layerId, 'shp')}`;
     navigator.clipboard.writeText(url);
     setCopiedDownloadId(layerId);
     setTimeout(() => setCopiedDownloadId(null), 2500);
@@ -385,8 +387,7 @@ export default function MapViewer({ layers, initialFocusLayerId }) {
       if (isVisible && !geojsonLayersRef.current[layer.id] && !loadingLayers[layer.id]) {
         setLoadingLayers(prev => ({ ...prev, [layer.id]: true }));
 
-        fetch(`/api/layers/${layer.id}/geojson`)
-          .then(res => res.json())
+        fetchGeoJsonData(layer.id)
           .then(geojson => {
             // Index items for smart search
             geojson.features.forEach((f, idx) => {
@@ -842,7 +843,7 @@ Situación: ${p.SITUA_OPER || 'Activa'}
 
                     <div className="layer-actions-group">
                       <a
-                        href={`/api/layers/${layer.id}/download?format=shp`}
+                        href={getDownloadUrl(layer.id, 'shp')}
                         download={`${layer.id}_SHP.zip`}
                         className="btn-layer-action btn-layer-download"
                         title={`Descarga directa del Shapefile ZIP de ${layer.name}`}
@@ -900,7 +901,7 @@ Situación: ${p.SITUA_OPER || 'Activa'}
                     <span style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>Descargar:</span>
                     <div className="quick-dl-pills-wrap">
                       <a
-                        href={`/api/layers/${layer.id}/download?format=shp`}
+                        href={getDownloadUrl(layer.id, 'shp')}
                         download={`${layer.id}_SHP.zip`}
                         className="quick-dl-pill shp"
                         title="Descarga directa Shapefile ZIP (.shp, .dbf, .prj, .shx)"
@@ -908,7 +909,7 @@ Situación: ${p.SITUA_OPER || 'Activa'}
                         <Download size={10} /> SHP
                       </a>
                       <a
-                        href={`/api/layers/${layer.id}/download?format=geojson`}
+                        href={getDownloadUrl(layer.id, 'geojson')}
                         download={`${layer.id}.geojson`}
                         className="quick-dl-pill geojson"
                         title="Descarga directa GeoJSON WGS84"
@@ -916,7 +917,7 @@ Situación: ${p.SITUA_OPER || 'Activa'}
                         GeoJSON
                       </a>
                       <a
-                        href={`/api/layers/${layer.id}/download?format=csv`}
+                        href={getDownloadUrl(layer.id, 'csv')}
                         download={`${layer.id}_atributos.csv`}
                         className="quick-dl-pill csv"
                         title="Descarga directa Atributos en CSV para Excel"
@@ -1147,7 +1148,7 @@ Situación: ${p.SITUA_OPER || 'Activa'}
 
                     <div className="gis-download-btn-row">
                       <a
-                        href={`/api/layers/${layer.id}/download?format=shp`}
+                        href={getDownloadUrl(layer.id, 'shp')}
                         download={`${layer.id}_SHP.zip`}
                         className="btn-gis-dl-main"
                         title={`Descargar ${layer.name} en Shapefile ZIP (.shp, .dbf, .prj, .shx)`}
@@ -1156,7 +1157,7 @@ Situación: ${p.SITUA_OPER || 'Activa'}
                         <span>SHP (.zip)</span>
                       </a>
                       <a
-                        href={`/api/layers/${layer.id}/download?format=geojson`}
+                        href={getDownloadUrl(layer.id, 'geojson')}
                         download={`${layer.id}.geojson`}
                         className="btn-gis-dl-sub"
                         title="Descargar en formato GeoJSON WGS84"
@@ -1164,7 +1165,7 @@ Situación: ${p.SITUA_OPER || 'Activa'}
                         GeoJSON
                       </a>
                       <a
-                        href={`/api/layers/${layer.id}/download?format=csv`}
+                        href={getDownloadUrl(layer.id, 'csv')}
                         download={`${layer.id}_atributos.csv`}
                         className="btn-gis-dl-sub"
                         title="Descargar tabla de atributos en CSV para Excel"
@@ -1353,7 +1354,7 @@ Situación: ${p.SITUA_OPER || 'Activa'}
             {/* Direct Layer Download from Drawer */}
             <div style={{ marginTop: '0.65rem' }}>
               <a
-                href={`/api/layers/${selectedFeature.layerId}/download?format=shp`}
+                href={getDownloadUrl(selectedFeature.layerId, 'shp')}
                 download={`${selectedFeature.layerId}_SHP.zip`}
                 className="btn-drawer-download"
                 style={{ width: '100%', marginBottom: '0.35rem' }}
@@ -1364,7 +1365,7 @@ Situación: ${p.SITUA_OPER || 'Activa'}
               </a>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.35rem' }}>
                 <a
-                  href={`/api/layers/${selectedFeature.layerId}/download?format=geojson`}
+                  href={getDownloadUrl(selectedFeature.layerId, 'geojson')}
                   download={`${selectedFeature.layerId}.geojson`}
                   className="btn-gis-dl-sub"
                   title="Descargar en formato GeoJSON"
@@ -1373,7 +1374,7 @@ Situación: ${p.SITUA_OPER || 'Activa'}
                   GeoJSON
                 </a>
                 <a
-                  href={`/api/layers/${selectedFeature.layerId}/download?format=csv`}
+                  href={getDownloadUrl(selectedFeature.layerId, 'csv')}
                   download={`${selectedFeature.layerId}_atributos.csv`}
                   className="btn-gis-dl-sub"
                   title="Descargar tabla en CSV"

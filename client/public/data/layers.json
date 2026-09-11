@@ -1,0 +1,134 @@
+{
+  "success": true,
+  "count": 4,
+  "layers": [
+    {
+      "id": "Conseciones_unidos",
+      "rawName": "Conseciones_unidos",
+      "name": "Concesiones GGF",
+      "project": "Concesiones GGF",
+      "category": "Concesiones",
+      "description": "Delimitación oficial de 15 concesiones forestales adjudicadas y asociadas a Green Gold Forestry.",
+      "color": "#C27107",
+      "tags": [
+        "Concesiones GGF",
+        "Forestal",
+        "Carbono",
+        "Loreto 1 & 2"
+      ],
+      "source": "base",
+      "hasDbf": true,
+      "hasPrj": true,
+      "files": [
+        "Conseciones_unidos.cpg",
+        "Conseciones_unidos.dbf",
+        "Conseciones_unidos.prj",
+        "Conseciones_unidos.sbn",
+        "Conseciones_unidos.sbx",
+        "Conseciones_unidos.shp",
+        "Conseciones_unidos.shx"
+      ],
+      "sizeBytes": 74297,
+      "crs": "WGS 1984 UTM Zona 18S (EPSG: 32718)",
+      "recordsCount": 15,
+      "geometryType": "Polygon, MultiPolygon",
+      "totalHectares": 394880.03
+    },
+    {
+      "id": "Area_Proyecto_Oct2022",
+      "rawName": "Area_Proyecto_Oct2022",
+      "name": "Proyecto GGL1",
+      "project": "Proyecto GGL1",
+      "category": "Límites & Cobertura",
+      "description": "Área del Proyecto GGL1 y cobertura vegetal (Línea base Oct 2022) con zonificación de bosque alto y fisiografía.",
+      "color": "#FFB300",
+      "tags": [
+        "Proyecto GGL1",
+        "Cobertura Vegetal",
+        "Fisiografía",
+        "Oct 2022"
+      ],
+      "source": "base",
+      "hasDbf": true,
+      "hasPrj": true,
+      "files": [
+        "Area_Proyecto_Oct2022.cpg",
+        "Area_Proyecto_Oct2022.dbf",
+        "Area_Proyecto_Oct2022.prj",
+        "Area_Proyecto_Oct2022.sbn",
+        "Area_Proyecto_Oct2022.sbx",
+        "Area_Proyecto_Oct2022.shp",
+        "Area_Proyecto_Oct2022.shx"
+      ],
+      "sizeBytes": 432994,
+      "crs": "WGS 1984 UTM Zona 18S (EPSG: 32718)",
+      "recordsCount": 13,
+      "geometryType": "MultiPolygon, Polygon",
+      "totalHectares": 183445.53
+    },
+    {
+      "id": "Area_Proyecto_GGL2_SinB10K120925",
+      "rawName": "Area_Proyecto_GGL2_SinB10K120925",
+      "name": "Proyecto GGL2",
+      "project": "Proyecto GGL2",
+      "category": "Límites de Proyecto",
+      "description": "Área neta elegible del Proyecto GGL2 (Loreto 2) con exclusión de zona de amortiguamiento de 10 km / comunidades nativas.",
+      "color": "#A5C639",
+      "tags": [
+        "Proyecto GGL2",
+        "Área Neta",
+        "Buffer 10K",
+        "Loreto 2"
+      ],
+      "source": "base",
+      "hasDbf": true,
+      "hasPrj": true,
+      "files": [
+        "Area_Proyecto_GGL2_SinB10K120925.cpg",
+        "Area_Proyecto_GGL2_SinB10K120925.dbf",
+        "Area_Proyecto_GGL2_SinB10K120925.prj",
+        "Area_Proyecto_GGL2_SinB10K120925.sbn",
+        "Area_Proyecto_GGL2_SinB10K120925.sbx",
+        "Area_Proyecto_GGL2_SinB10K120925.shp",
+        "Area_Proyecto_GGL2_SinB10K120925.shx"
+      ],
+      "sizeBytes": 1821712,
+      "crs": "WGS 1984 UTM Zona 18S (EPSG: 32718)",
+      "recordsCount": 32,
+      "geometryType": "Polygon",
+      "totalHectares": 106575.87
+    },
+    {
+      "id": "CampamentosGGF",
+      "rawName": "CampamentosGGF",
+      "name": "Campamentos GGF",
+      "project": "Campamentos GGF",
+      "category": "Infraestructura",
+      "description": "Ubicaciones y balizas estratégicas de los campamentos base GGF: Bahía, Mazán (Oroza) y Bravo.",
+      "color": "#EF4444",
+      "tags": [
+        "Campamentos GGF",
+        "Puntos",
+        "Operaciones",
+        "Logística"
+      ],
+      "source": "base",
+      "hasDbf": true,
+      "hasPrj": true,
+      "files": [
+        "CampamentosGGF.cpg",
+        "CampamentosGGF.dbf",
+        "CampamentosGGF.prj",
+        "CampamentosGGF.sbn",
+        "CampamentosGGF.sbx",
+        "CampamentosGGF.shp",
+        "CampamentosGGF.shx"
+      ],
+      "sizeBytes": 1647,
+      "crs": "WGS 1984 UTM Zona 18S (EPSG: 32718)",
+      "recordsCount": 3,
+      "geometryType": "Point",
+      "totalHectares": null
+    }
+  ]
+}

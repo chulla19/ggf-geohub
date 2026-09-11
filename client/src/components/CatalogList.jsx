@@ -12,6 +12,7 @@ import {
   Tag,
   ExternalLink
 } from 'lucide-react';
+import { getDownloadUrl } from '../utils/api';
 
 export default function CatalogList({
   layers,
@@ -23,14 +24,15 @@ export default function CatalogList({
   const [selectedCategory, setSelectedCategory] = useState('ALL');
   const [copiedLayerId, setCopiedLayerId] = useState(null);
 
+  // Unique categories
   const categories = ['ALL', ...new Set(layers.map(l => l.category || 'Otros'))];
 
   const filteredLayers = layers.filter(l => {
     const matchesSearch =
       l.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      l.rawName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      l.project.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (l.tags && l.tags.some(t => t.toLowerCase().includes(searchTerm.toLowerCase())));
+      l.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (l.tags && l.tags.some(t => t.toLowerCase().includes(searchTerm.toLowerCase()))) ||
+      (l.project && l.project.toLowerCase().includes(searchTerm.toLowerCase()));
 
     const matchesCat =
       selectedCategory === 'ALL' || (l.category || 'Otros') === selectedCategory;
@@ -39,7 +41,7 @@ export default function CatalogList({
   });
 
   const handleCopyShareLink = (layerId, layerName) => {
-    const directUrl = `${window.location.origin}/api/layers/${layerId}/download?format=shp`;
+    const directUrl = `${window.location.origin}${getDownloadUrl(layerId, 'shp')}`;
     navigator.clipboard.writeText(directUrl).then(() => {
       setCopiedLayerId(layerId);
       if (onShowToast) {
@@ -160,7 +162,8 @@ export default function CatalogList({
                 {/* Download Group */}
                 <div className="download-btn-group">
                   <a
-                    href={`/api/layers/${layer.id}/download?format=shp`}
+                    href={getDownloadUrl(layer.id, 'shp')}
+                    download
                     className="btn-shp-download"
                     title="Descarga el Shapefile completo comprimido en .ZIP (incluye .shp, .dbf, .prj, .shx)"
                   >
@@ -169,7 +172,8 @@ export default function CatalogList({
                   </a>
 
                   <a
-                    href={`/api/layers/${layer.id}/download?format=geojson`}
+                    href={getDownloadUrl(layer.id, 'geojson')}
+                    download
                     className="btn-secondary-download"
                     title="Descargar en formato GeoJSON WGS84"
                   >
@@ -177,7 +181,8 @@ export default function CatalogList({
                   </a>
 
                   <a
-                    href={`/api/layers/${layer.id}/download?format=csv`}
+                    href={getDownloadUrl(layer.id, 'csv')}
+                    download
                     className="btn-secondary-download"
                     title="Descargar tabla de atributos en CSV para Excel"
                   >

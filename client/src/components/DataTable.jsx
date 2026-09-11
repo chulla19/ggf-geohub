@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Search, Download, RefreshCw, Filter } from 'lucide-react';
+import { fetchRecordsData, getDownloadUrl } from '../utils/api';
 
 export default function DataTable({ layers, selectedLayerId, onSelectLayer }) {
-  const [currentLayerId, setCurrentLayerId] = useState(
-    selectedLayerId || (layers[0] ? layers[0].id : '')
-  );
+  const [currentLayerId, setCurrentLayerId] = useState(selectedLayerId || (layers[0] ? layers[0].id : null));
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchFilter, setSearchFilter] = useState('');
@@ -20,16 +19,20 @@ export default function DataTable({ layers, selectedLayerId, onSelectLayer }) {
   useEffect(() => {
     if (!currentLayerId) return;
 
+    let isMounted = true;
     setLoading(true);
-    fetch(`/api/layers/${currentLayerId}/records`)
-      .then(res => res.json())
+    fetchRecordsData(currentLayerId)
       .then(data => {
-        if (data.success) {
+        if (isMounted && data && data.records) {
           setRecords(data.records);
         }
       })
       .catch(err => console.error('Error fetching table records:', err))
-      .finally(() => setLoading(false));
+      .finally(() => {
+        if (isMounted) setLoading(false);
+      });
+
+    return () => { isMounted = false; };
   }, [currentLayerId]);
 
   const currentLayer = layers.find(l => l.id === currentLayerId);
@@ -113,7 +116,8 @@ export default function DataTable({ layers, selectedLayerId, onSelectLayer }) {
           </div>
 
           <a
-            href={`/api/layers/${currentLayerId}/download?format=csv`}
+            href={getDownloadUrl(currentLayerId, 'csv')}
+            download
             className="btn-secondary-download"
             title="Exportar registros a CSV"
           >

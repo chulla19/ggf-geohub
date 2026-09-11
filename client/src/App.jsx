@@ -17,6 +17,8 @@ import MapViewer from './components/MapViewer';
 import DataTable from './components/DataTable';
 import UploadModal from './components/UploadModal';
 
+import { fetchLayersData } from './utils/api';
+
 export default function App() {
   const isAdmin = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('admin') === 'true';
   const [layers, setLayers] = useState([]);
@@ -26,20 +28,21 @@ export default function App() {
   const [isUploadOpen, setIsUploadOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
 
-  const fetchLayers = () => {
+  const fetchLayers = async () => {
     setLoading(true);
-    fetch('/api/layers')
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          setLayers(data.layers);
-          if (!selectedLayerId && data.layers.length > 0) {
-            setSelectedLayerId(data.layers[0].id);
-          }
+    try {
+      const data = await fetchLayersData();
+      if (data && data.success) {
+        setLayers(data.layers);
+        if (!selectedLayerId && data.layers.length > 0) {
+          setSelectedLayerId(data.layers[0].id);
         }
-      })
-      .catch(err => console.error('Error fetching layers:', err))
-      .finally(() => setLoading(false));
+      }
+    } catch (err) {
+      console.error('Error fetching layers:', err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
