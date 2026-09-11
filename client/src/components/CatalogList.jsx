@@ -12,7 +12,7 @@ import {
   Tag,
   ExternalLink
 } from 'lucide-react';
-import { getDownloadUrl } from '../utils/api';
+import { getDownloadUrl, getAbsoluteDownloadUrl } from '../utils/api';
 
 export default function CatalogList({
   layers,
@@ -41,7 +41,7 @@ export default function CatalogList({
   });
 
   const handleCopyShareLink = (layerId, layerName) => {
-    const directUrl = `${window.location.origin}${getDownloadUrl(layerId, 'shp')}`;
+    const directUrl = getAbsoluteDownloadUrl(layerId, 'shp');
     navigator.clipboard.writeText(directUrl).then(() => {
       setCopiedLayerId(layerId);
       if (onShowToast) {

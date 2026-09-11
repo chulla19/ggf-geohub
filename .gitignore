@@ -5,3 +5,6 @@ uploads/*
 !uploads/.gitkeep
 .env
 *.log
+APPGGF.zip
+Cloudflare_Pages_dist.zip
+client/dist/

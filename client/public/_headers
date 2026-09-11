@@ -1,0 +1,7 @@
+/*
+  Access-Control-Allow-Origin: *
+  X-Content-Type-Options: nosniff
+
+/data/*
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=86400

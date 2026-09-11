@@ -31,7 +31,7 @@ import {
   FileText
 } from 'lucide-react';
 
-import { fetchGeoJsonData, getDownloadUrl } from '../utils/api';
+import { fetchGeoJsonData, getDownloadUrl, getAbsoluteDownloadUrl } from '../utils/api';
 
 // Proj4 definitions for UTM Zone 18S & WGS84
 const utm18sDef = "+proj=utm +zone=18 +south +datum=WGS84 +units=m +no_defs";
@@ -161,7 +161,7 @@ export default function MapViewer({ layers, initialFocusLayerId }) {
 
   // Copy direct download URL to clipboard
   const handleCopyDirectLink = (layerId) => {
-    const url = `${window.location.origin}${getDownloadUrl(layerId, 'shp')}`;
+    const url = getAbsoluteDownloadUrl(layerId, 'shp');
     navigator.clipboard.writeText(url);
     setCopiedDownloadId(layerId);
     setTimeout(() => setCopiedDownloadId(null), 2500);

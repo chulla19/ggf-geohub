@@ -65,3 +65,13 @@ export function getDownloadUrl(layerId, format = 'shp') {
   }
   return `${base}data/downloads/${layerId}_SHP.zip`;
 }
+
+export function getAbsoluteDownloadUrl(layerId, format = 'shp') {
+  const rel = getDownloadUrl(layerId, format);
+  try {
+    return new URL(rel, window.location.href).href;
+  } catch (e) {
+    return rel;
+  }
+}
+
