@@ -1229,10 +1229,20 @@ body {
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.layers-count-badge {
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: var(--text-muted);
+.select-all-layers-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.15s ease;
+}
+
+.select-all-layers-label:hover {
+  color: var(--ggf-gold);
 }
 
 /* Independent Layer Card in Sidebar as Collapsible Dropdown */

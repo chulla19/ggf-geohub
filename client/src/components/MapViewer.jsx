@@ -73,20 +73,22 @@ function calculatePolygonArea(latlngs) {
   return area;
 }
 
-// Basemap Tile Providers (Only Satelital HD & Calles/Ríos with Ultra Deep Zoom up to Level 22)
+// Basemap Tile Providers (Optimized Satelital HD & Calles/Ríos with fast subdomains and calibrated Zoom 19)
 const BASEMAP_URLS = {
   satellite: {
     name: 'Satelital HD',
-    url: 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
-    attribution: '&copy; Google Satellite Imagery &bull; CNES / Airbus / Maxar',
-    maxZoom: 22,
-    maxNativeZoom: 20
+    url: 'https://mt{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
+    subdomains: ['0', '1', '2', '3'],
+    attribution: '&copy; Google Satellite Imagery &bull; Maxar / Airbus',
+    maxZoom: 19,
+    maxNativeZoom: 19
   },
   streets: {
     name: 'Calles & Ríos',
     url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    subdomains: ['a', 'b', 'c'],
     attribution: '&copy; OpenStreetMap contributors',
-    maxZoom: 22,
+    maxZoom: 19,
     maxNativeZoom: 19
   }
 };
@@ -197,6 +199,16 @@ export default function MapViewer({ layers, initialFocusLayerId }) {
     }
   }, [layers]);
 
+  // Check if all layers are currently selected
+  const allLayersSelected = layers && layers.length > 0 && layers.every(l => layerVisibility[l.id] !== false);
+  const handleToggleSelectAllLayers = () => {
+    if (soloLayerId) setSoloLayerId(null);
+    const targetState = !allLayersSelected;
+    const next = {};
+    layers.forEach(l => { next[l.id] = targetState; });
+    setLayerVisibility(next);
+  };
+
   // Determine feature color (Official GGF Colors)
   const getFeatureColor = useCallback((feature, layerId) => {
     return OFFICIAL_LAYER_COLORS[layerId] || '#C27107';
@@ -224,8 +236,11 @@ export default function MapViewer({ layers, initialFocusLayerId }) {
     const map = L.map(mapRef.current, {
       center: [-2.9, -73.8],
       zoom: 8,
-      minZoom: 4,
-      maxZoom: 22,
+      minZoom: 5,
+      maxZoom: 19,
+      zoomAnimation: true,
+      fadeAnimation: true,
+      markerZoomAnimation: true,
       zoomControl: false,
       attributionControl: true
     });
@@ -235,8 +250,13 @@ export default function MapViewer({ layers, initialFocusLayerId }) {
     const baseCfg = BASEMAP_URLS[activeBasemap] || BASEMAP_URLS.satellite;
     const tileLayer = L.tileLayer(baseCfg.url, {
       attribution: baseCfg.attribution,
-      maxZoom: baseCfg.maxZoom || 22,
-      maxNativeZoom: baseCfg.maxNativeZoom || 20
+      subdomains: baseCfg.subdomains || ['0', '1', '2', '3'],
+      maxZoom: baseCfg.maxZoom || 19,
+      maxNativeZoom: baseCfg.maxNativeZoom || 19,
+      updateWhenIdle: false,
+      updateWhenZooming: true,
+      keepBuffer: 8,
+      crossOrigin: true
     }).addTo(map);
 
     basemapLayerRef.current = tileLayer;
@@ -279,8 +299,13 @@ export default function MapViewer({ layers, initialFocusLayerId }) {
     const baseCfg = BASEMAP_URLS[activeBasemap] || BASEMAP_URLS.satellite;
     const newTileLayer = L.tileLayer(baseCfg.url, {
       attribution: baseCfg.attribution,
-      maxZoom: baseCfg.maxZoom || 22,
-      maxNativeZoom: baseCfg.maxNativeZoom || 20
+      subdomains: baseCfg.subdomains || ['0', '1', '2', '3'],
+      maxZoom: baseCfg.maxZoom || 19,
+      maxNativeZoom: baseCfg.maxNativeZoom || 19,
+      updateWhenIdle: false,
+      updateWhenZooming: true,
+      keepBuffer: 8,
+      crossOrigin: true
     }).addTo(mapInstanceRef.current);
 
     newTileLayer.bringToBack();
@@ -790,7 +815,16 @@ Situación: ${p.SITUA_OPER || 'Activa'}
           {isLayersMenuOpen && (
             <div className="layers-master-body">
               <div className="layers-master-toolbar">
-                <span className="layers-count-badge">{layers.length} capas</span>
+                <label className="select-all-layers-label" title="Activar o desactivar todas las capas en el mapa">
+                  <input
+                    type="checkbox"
+                    checked={allLayersSelected}
+                    onChange={handleToggleSelectAllLayers}
+                    style={{ accentColor: 'var(--primary)', cursor: 'pointer' }}
+                  />
+                  <span>Seleccionar todo</span>
+                </label>
+
                 <button
                   className="btn-toggle-all-layers"
                   onClick={(e) => {
@@ -802,7 +836,7 @@ Situación: ${p.SITUA_OPER || 'Activa'}
                   }}
                   title="Expandir o colapsar todas las opciones individuales"
                 >
-                  {layers.every(l => expandedLayers[l.id]) ? 'Colapsar todo' : 'Expandir todo'}
+                  {layers.every(l => expandedLayers[l.id]) ? 'Colapsar opciones' : 'Expandir opciones'}
                 </button>
               </div>
 
