@@ -1492,42 +1492,17 @@ Situación: ${p.SITUA_OPER || 'Activa'}
           )}
         </div>
 
-        {/* Live Bottom Coordinates & Metrics Bar */}
-        <div className="map-kpi-bar">
-          <div className="map-kpi-item">
-            <Radio size={14} color="var(--primary-light)" style={{ animation: 'spin 3s linear infinite' }} />
-            <span>Superficie Activa:</span>
-            <strong>{visibleHectares.toLocaleString()} ha</strong>
+        {/* Live Bottom Coordinates Bar (Official UTM 18S) */}
+        {mouseCoords.utmX && (
+          <div className="map-kpi-bar">
+            <div className="map-kpi-item" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem' }}>
+              <span style={{ color: 'var(--text-muted)' }}>UTM 18S:</span>
+              <strong style={{ color: 'var(--ggf-gold)', letterSpacing: '0.03em' }}>
+                {mouseCoords.utmX.toLocaleString()} E, {mouseCoords.utmY.toLocaleString()} N
+              </strong>
+            </div>
           </div>
-
-          <div style={{ width: '1px', height: '14px', background: 'var(--border-subtle)' }} />
-
-          <div className="map-kpi-item" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem' }}>
-            <span>Cursor WGS84:</span>
-            <strong style={{ color: 'var(--primary-light)' }}>
-              {mouseCoords.lat}°, {mouseCoords.lng}°
-            </strong>
-          </div>
-
-          {mouseCoords.utmX && (
-            <>
-              <div style={{ width: '1px', height: '14px', background: 'var(--border-subtle)' }} />
-              <div className="map-kpi-item" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem' }}>
-                <span>UTM 18S:</span>
-                <strong style={{ color: 'var(--accent-cyan)' }}>
-                  {mouseCoords.utmX.toLocaleString()} E, {mouseCoords.utmY.toLocaleString()} N
-                </strong>
-              </div>
-            </>
-          )}
-
-          <div style={{ width: '1px', height: '14px', background: 'var(--border-subtle)' }} />
-
-          <div className="map-kpi-item" style={{ fontSize: '0.72rem' }}>
-            <span>Zoom:</span>
-            <strong>{currentZoom}</strong>
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );
