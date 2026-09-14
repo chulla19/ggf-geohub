@@ -2376,7 +2376,7 @@ body {
   background: rgba(255, 255, 255, 0.1);
 }
 
-/* Map Floating Institutional Watermark */
+/* Map Floating Institutional Logo */
 .map-ggf-watermark {
   position: absolute;
   top: 14px;
@@ -2384,11 +2384,11 @@ body {
   z-index: 500;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  justify-content: center;
   background: var(--bg-glass);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  padding: 0.4rem 0.85rem;
+  padding: 0.35rem 0.65rem;
   border-radius: var(--radius-md);
   border: 1px solid rgba(194, 113, 7, 0.35);
   box-shadow: var(--shadow-md);
@@ -2400,25 +2400,6 @@ body {
   height: 28px;
   width: auto;
   object-fit: contain;
-}
-
-.map-watermark-text {
-  display: flex;
-  flex-direction: column;
-}
-
-.map-watermark-title {
-  font-size: 0.76rem;
-  font-weight: 800;
-  color: #fff;
-  letter-spacing: 0.04em;
-  line-height: 1.1;
-}
-
-.map-watermark-sub {
-  font-size: 0.65rem;
-  color: var(--ggf-orange-light);
-  font-weight: 600;
 }
 
 /* Corporate Footer */

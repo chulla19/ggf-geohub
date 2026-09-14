@@ -284,7 +284,17 @@ export default function MapViewer({ layers, initialFocusLayerId }) {
 
     mapInstanceRef.current = map;
 
+    // Resize observer to ensure full canvas coverage without unrendered gaps
+    let resizeObserver = null;
+    if (mapRef.current && typeof ResizeObserver !== 'undefined') {
+      resizeObserver = new ResizeObserver(() => {
+        map.invalidateSize();
+      });
+      resizeObserver.observe(mapRef.current);
+    }
+
     return () => {
+      if (resizeObserver) resizeObserver.disconnect();
       map.remove();
       mapInstanceRef.current = null;
     };
@@ -995,17 +1005,13 @@ Situación: ${p.SITUA_OPER || 'Activa'}
       <div className="map-canvas-container">
         <div id="gis-map" ref={mapRef} />
 
-        {/* Floating GGF Institutional Badge on Map */}
-        <div className="map-ggf-watermark">
+        {/* Floating GGF Institutional Logo on Map */}
+        <div className="map-ggf-watermark" title="Green Gold Forestry">
           <img
             src={ggfLogoOrange}
-            alt="GGF Group"
+            alt="Green Gold Forestry"
             className="map-watermark-logo"
           />
-          <div className="map-watermark-text">
-            <span className="map-watermark-title">GREEN GOLD FORESTRY</span>
-            <span className="map-watermark-sub">GeoGGF &bull; UTM 18S</span>
-          </div>
         </div>
 
         {/* Floating GIS Toolbar (Top Right) */}
@@ -1464,7 +1470,7 @@ Situación: ${p.SITUA_OPER || 'Activa'}
             className="gis-legend-header"
             onClick={() => setIsLegendOpen(!isLegendOpen)}
           >
-            <span>Leyenda Oficial GGF</span>
+            <span>Leyenda</span>
             <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
               {isLegendOpen ? 'Ocultar' : 'Mostrar'}
             </span>
