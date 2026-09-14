@@ -3,7 +3,6 @@ import {
   Download,
   Share2,
   Map,
-  Table,
   Search,
   Check,
   FileCode,
@@ -18,7 +17,6 @@ import ggfLogoOrange from '../assets/logos/ggf-logo-orange.png';
 export default function CatalogList({
   layers,
   onSelectLayerForMap,
-  onSelectLayerForTable,
   onShowToast
 }) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -250,26 +248,14 @@ export default function CatalogList({
                   )}
                 </button>
 
-                {/* View on Map / View Table */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.4rem', marginTop: '0.2rem' }}>
-                  <button
-                    className="btn-secondary-download"
-                    style={{ justifyContent: 'center' }}
-                    onClick={() => onSelectLayerForMap(layer.id)}
-                  >
-                    <Map size={14} />
-                    <span>Ver en Mapa</span>
-                  </button>
-
-                  <button
-                    className="btn-secondary-download"
-                    style={{ justifyContent: 'center' }}
-                    onClick={() => onSelectLayerForTable(layer.id)}
-                  >
-                    <Table size={14} />
-                    <span>Ver Atributos</span>
-                  </button>
-                </div>
+                {/* View on Map */}
+                <button
+                  className="btn-card-map-view"
+                  onClick={() => onSelectLayerForMap(layer.id)}
+                >
+                  <Map size={15} />
+                  <span>Explorar en Visor Satelital GGF</span>
+                </button>
               </div>
             </div>
           );

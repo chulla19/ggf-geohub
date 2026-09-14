@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Trees,
   Layers,
   Map as MapIcon,
-  Table as TableIcon,
   UploadCloud,
   CheckCircle,
-  Compass,
   Globe,
   Share2,
-  HardDrive,
-  ShieldCheck
+  Check,
+  ShieldCheck,
+  ChevronDown
 } from 'lucide-react';
 import CatalogList from './components/CatalogList';
 import MapViewer from './components/MapViewer';
-import DataTable from './components/DataTable';
 import UploadModal from './components/UploadModal';
 
 import { fetchLayersData } from './utils/api';
@@ -25,10 +22,11 @@ export default function App() {
   const isAdmin = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('admin') === 'true';
   const [layers, setLayers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('catalog'); // 'catalog' | 'map' | 'table'
+  const [activeTab, setActiveTab] = useState('catalog'); // 'catalog' | 'map'
   const [selectedLayerId, setSelectedLayerId] = useState(null);
   const [isUploadOpen, setIsUploadOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
+  const [isShareCopied, setIsShareCopied] = useState(false);
 
   const fetchLayers = async () => {
     setLoading(true);
@@ -63,20 +61,22 @@ export default function App() {
     setActiveTab('map');
   };
 
-  const handleSelectLayerForTable = layerId => {
-    setSelectedLayerId(layerId);
-    setActiveTab('table');
+  const handleSharePortal = () => {
+    const portalUrl = window.location.href.split('?')[0];
+    navigator.clipboard.writeText(portalUrl).then(() => {
+      setIsShareCopied(true);
+      showToast('🔗 ¡Enlace del portal GGF GeoHub copiado al portapapeles!');
+      setTimeout(() => setIsShareCopied(false), 3000);
+    });
   };
 
-  // Calculate aggregates
-  const totalHectares = layers.reduce((acc, l) => {
-    if (l.id === 'Conseciones_unidos' && l.totalHectares) {
-      return l.totalHectares;
-    }
-    return acc;
-  }, 394880);
-
-  const totalPolygons = layers.reduce((acc, l) => acc + (l.recordsCount || 0), 0);
+  // Find active layer for dynamic area display
+  const currentLayer = layers.find(l => l.id === selectedLayerId) || layers[0] || {};
+  const currentArea = currentLayer.totalHectares
+    ? `${Number(currentLayer.totalHectares).toLocaleString()} ha`
+    : currentLayer.geometryType?.toLowerCase().includes('point')
+    ? `${currentLayer.recordsCount || 3} Puntos Operativos`
+    : '394,880 ha';
 
   return (
     <div className="app-container">
@@ -116,14 +116,6 @@ export default function App() {
             <MapIcon size={16} />
             <span>Visor Satelital GGF</span>
           </button>
-
-          <button
-            className={`nav-tab-btn ${activeTab === 'table' ? 'active' : ''}`}
-            onClick={() => setActiveTab('table')}
-          >
-            <TableIcon size={16} />
-            <span>Tabla de Atributos</span>
-          </button>
         </nav>
 
         {/* Navbar Action */}
@@ -142,54 +134,55 @@ export default function App() {
         </div>
       </header>
 
-      {/* Metrics Banner */}
+      {/* Dynamic Metrics & Functional Share Banner */}
       <section className="stats-banner">
         <div className="stats-group">
-          <div className="stat-item">
+          {/* Dynamic Hectares Display */}
+          <div className="stat-item dynamic-area-box">
             <div className="stat-icon ggf-forest">
               <Globe size={20} />
             </div>
             <div className="stat-text">
-              <div className="value">{totalHectares.toLocaleString()} ha</div>
-              <div className="label">Superficie Concesiones</div>
-            </div>
-          </div>
-
-          <div className="stat-item">
-            <div className="stat-icon ggf-orange">
-              <Layers size={20} />
-            </div>
-            <div className="stat-text">
-              <div className="value">{layers.length} Capas</div>
-              <div className="label">En Repositorio SIG</div>
-            </div>
-          </div>
-
-          <div className="stat-item">
-            <div className="stat-icon ggf-gold">
-              <HardDrive size={20} />
-            </div>
-            <div className="stat-text">
-              <div className="value">{totalPolygons} Registros</div>
-              <div className="label">Polígonos & Puntos</div>
-            </div>
-          </div>
-
-          <div className="stat-item">
-            <div className="stat-icon ggf-lime">
-              <Compass size={20} />
-            </div>
-            <div className="stat-text">
-              <div className="value">UTM 18S</div>
-              <div className="label">Datum WGS 1984</div>
+              <div className="value dynamic-val">
+                {currentArea}
+              </div>
+              <div className="label dynamic-label">
+                <span>Superficie:</span>
+                <select
+                  className="area-layer-selector"
+                  value={selectedLayerId || ''}
+                  onChange={e => setSelectedLayerId(e.target.value)}
+                  title="Cambiar capa para ver superficie"
+                >
+                  {layers.map(l => (
+                    <option key={l.id} value={l.id}>
+                      {l.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="share-quick-hint">
-          <Share2 size={15} color="var(--ggf-orange)" />
-          <span>Enlaces directos Shapefile &bull; Descarga sin intermediarios</span>
-        </div>
+        {/* Functional Share Button */}
+        <button
+          className={`btn-share-portal ${isShareCopied ? 'copied' : ''}`}
+          onClick={handleSharePortal}
+          title="Copiar enlace de esta página para compartir"
+        >
+          {isShareCopied ? (
+            <>
+              <Check size={16} color="#000" />
+              <span>¡Enlace Copiado!</span>
+            </>
+          ) : (
+            <>
+              <Share2 size={16} />
+              <span>Compartir Portal</span>
+            </>
+          )}
+        </button>
       </section>
 
       {/* Main Views */}
@@ -205,7 +198,6 @@ export default function App() {
               <CatalogList
                 layers={layers}
                 onSelectLayerForMap={handleSelectLayerForMap}
-                onSelectLayerForTable={handleSelectLayerForTable}
                 onShowToast={showToast}
               />
             )}
@@ -214,14 +206,6 @@ export default function App() {
               <MapViewer
                 layers={layers}
                 initialFocusLayerId={selectedLayerId}
-              />
-            )}
-
-            {activeTab === 'table' && (
-              <DataTable
-                layers={layers}
-                selectedLayerId={selectedLayerId}
-                onSelectLayer={id => setSelectedLayerId(id)}
               />
             )}
           </>
