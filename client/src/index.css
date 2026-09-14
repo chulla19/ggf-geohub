@@ -60,6 +60,106 @@
   --radius-full: 9999px;
 }
 
+/* Light Theme Variables & Overrides */
+[data-theme="light"] {
+  --bg-darkest: #e2e8e5;
+  --bg-main: #f3f7f5;
+  --bg-surface: #ffffff;
+  --bg-surface-elevated: #e6ede9;
+  --bg-surface-hover: #d8e5dd;
+  --bg-glass: rgba(255, 255, 255, 0.94);
+  --bg-glass-card: rgba(255, 255, 255, 0.9);
+
+  /* Primary Accent tokens */
+  --primary: #C27107;
+  --primary-hover: #a55f04;
+  --primary-light: #9a5704;
+  --primary-dark: #6e3a00;
+  --primary-glow: rgba(194, 113, 7, 0.2);
+  --primary-bg: rgba(194, 113, 7, 0.08);
+
+  /* Secondary Accents */
+  --accent-cyan-bg: rgba(165, 198, 57, 0.18);
+  --accent-amber-bg: rgba(255, 179, 0, 0.18);
+  --accent-purple-bg: rgba(47, 92, 36, 0.15);
+
+  /* Text & Borders */
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --border-subtle: rgba(0, 0, 0, 0.09);
+  --border-focus: rgba(194, 113, 7, 0.7);
+  --border-card: rgba(0, 0, 0, 0.08);
+
+  /* Shadows */
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
+  --shadow-glow: 0 0 20px rgba(194, 113, 7, 0.2);
+}
+
+[data-theme="light"] body {
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .brand-title-row h1 {
+  background: linear-gradient(135deg, #0f172a 60%, var(--ggf-orange) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+[data-theme="light"] .brand-logo-container {
+  background: #f8fafc;
+  border-color: rgba(194, 113, 7, 0.25);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .navbar {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid rgba(194, 113, 7, 0.2);
+}
+
+[data-theme="light"] .nav-tabs {
+  background: #e2e8e5;
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .nav-tab-btn {
+  color: #475569;
+}
+
+[data-theme="light"] .nav-tab-btn:hover {
+  color: #0f172a;
+  background: #d3dfd7;
+}
+
+[data-theme="light"] .stat-item.dynamic-area-box {
+  background: #ffffff;
+  border-color: rgba(194, 113, 7, 0.25);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .catalog-card {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .catalog-card:hover {
+  box-shadow: 0 8px 24px rgba(194, 113, 7, 0.15);
+  border-color: rgba(194, 113, 7, 0.4);
+}
+
+[data-theme="light"] .attribute-drawer {
+  background: var(--bg-surface);
+  border-color: var(--border-subtle);
+}
+
+[data-theme="light"] .drawer-header {
+  background: var(--bg-surface-elevated);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -268,6 +368,74 @@ body {
   font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.02em;
+}
+
+/* Theme Switcher Segmented Control */
+.theme-switcher-control {
+  display: flex;
+  align-items: center;
+  background: var(--bg-darkest);
+  padding: 0.2rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-subtle);
+  gap: 0.15rem;
+}
+
+.theme-pill-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--radius-full);
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-main);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.theme-pill-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-surface-hover);
+}
+
+.theme-pill-btn.active {
+  background: linear-gradient(135deg, var(--ggf-orange) 0%, var(--ggf-orange-hover) 100%);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(194, 113, 7, 0.35);
+  font-weight: 700;
+}
+
+/* Share Portal Button */
+.btn-share-portal {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  padding: 0.45rem 0.85rem;
+  border-radius: var(--radius-md);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-share-portal:hover {
+  background: var(--bg-surface-hover);
+  border-color: var(--primary);
+  color: var(--primary-light);
+}
+
+.btn-share-portal.copied {
+  background: var(--ggf-lime);
+  color: #000;
+  border-color: var(--ggf-lime);
+  font-weight: 700;
 }
 
 /* Dynamic Metrics & Share Banner */

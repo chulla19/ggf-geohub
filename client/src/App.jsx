@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import {
   Layers,
   Map as MapIcon,
@@ -8,7 +7,10 @@ import {
   Share2,
   Check,
   ShieldCheck,
-  ChevronDown
+  ChevronDown,
+  Sun,
+  Moon,
+  Monitor
 } from 'lucide-react';
 import CatalogList from './components/CatalogList';
 import MapViewer from './components/MapViewer';
@@ -27,6 +29,34 @@ export default function App() {
   const [isUploadOpen, setIsUploadOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
   const [isShareCopied, setIsShareCopied] = useState(false);
+
+  // Theme Mode: 'auto' | 'dark' | 'light'
+  const [themeMode, setThemeMode] = useState(() => {
+    return localStorage.getItem('ggf-theme') || 'auto';
+  });
+
+  useEffect(() => {
+    localStorage.setItem('ggf-theme', themeMode);
+    const root = document.documentElement;
+
+    const applyTheme = () => {
+      if (themeMode === 'auto') {
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        root.setAttribute('data-theme', systemPrefersDark ? 'dark' : 'light');
+      } else {
+        root.setAttribute('data-theme', themeMode);
+      }
+    };
+
+    applyTheme();
+
+    if (themeMode === 'auto') {
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      const listener = () => applyTheme();
+      mediaQuery.addEventListener('change', listener);
+      return () => mediaQuery.removeEventListener('change', listener);
+    }
+  }, [themeMode]);
 
   const fetchLayers = async () => {
     setLoading(true);
@@ -125,6 +155,34 @@ export default function App() {
               <span>Subir Shapefile</span>
             </button>
           )}
+
+          {/* Theme Switcher (Claro / Oscuro / Automático) */}
+          <div className="theme-switcher-control" title="Cambiar tema visual">
+            <button
+              className={`theme-pill-btn ${themeMode === 'light' ? 'active' : ''}`}
+              onClick={() => setThemeMode('light')}
+              title="Tema Claro"
+            >
+              <Sun size={13} />
+              <span>Claro</span>
+            </button>
+            <button
+              className={`theme-pill-btn ${themeMode === 'dark' ? 'active' : ''}`}
+              onClick={() => setThemeMode('dark')}
+              title="Tema Oscuro"
+            >
+              <Moon size={13} />
+              <span>Oscuro</span>
+            </button>
+            <button
+              className={`theme-pill-btn ${themeMode === 'auto' ? 'active' : ''}`}
+              onClick={() => setThemeMode('auto')}
+              title="Tema Automático (según el sistema)"
+            >
+              <Monitor size={13} />
+              <span>Auto</span>
+            </button>
+          </div>
 
           {/* Functional Share Button */}
           <button
