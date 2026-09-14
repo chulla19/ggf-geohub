@@ -180,28 +180,16 @@ export default function App() {
             <div className="footer-logo-row">
               <img
                 src={ggfLogoWhite}
-                alt="GGF Group"
+                alt="Green Gold Forestry"
                 className="footer-logo-img"
               />
-              <div>
-                <h4>Green Gold Forestry</h4>
-                <p>Manejo Forestal Sostenible &bull; Loreto, Perú</p>
-              </div>
+              <h4>Green Gold Forestry</h4>
             </div>
-            <p className="footer-description">
-              Plataforma geoespacial y de catalogación territorial oficial de Green Gold Forestry S.A.C.
-              Gestión de concesiones forestales, zonificación y proyectos de conservación en la Amazonía Peruana.
-            </p>
           </div>
 
           <div className="footer-meta-col">
-            <div className="footer-pill-group">
-              <span className="footer-pill">Loreto &bull; Amazonía Peruana</span>
-              <span className="footer-pill">EPSG: 32718 (UTM 18S)</span>
-              <span className="footer-pill">394,880+ Hectáreas Protegidas</span>
-            </div>
             <p className="footer-copy">
-              &copy; {new Date().getFullYear()} Green Gold Forestry (GGF Group). Todos los derechos reservados.
+              &copy; {new Date().getFullYear()} Green Gold Forestry. Todos los derechos reservados.
             </p>
           </div>
         </div>
