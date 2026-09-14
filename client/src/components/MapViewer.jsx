@@ -1004,7 +1004,7 @@ Situación: ${p.SITUA_OPER || 'Activa'}
           />
           <div className="map-watermark-text">
             <span className="map-watermark-title">GREEN GOLD FORESTRY</span>
-            <span className="map-watermark-sub">SIG Loreto &bull; UTM 18S</span>
+            <span className="map-watermark-sub">GeoGGF &bull; UTM 18S</span>
           </div>
         </div>
 

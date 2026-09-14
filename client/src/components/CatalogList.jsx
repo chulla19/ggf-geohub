@@ -74,10 +74,10 @@ export default function CatalogList({
                 <span className="badge-dot"></span>
                 <span>Portal Corporativo de Información Territorial</span>
               </div>
-              <h2>Green Gold Forestry GeoHub</h2>
+              <h2>Green Gold Forestry &bull; GeoGGF</h2>
               <p>
                 Repositorio geoespacial oficial para la descarga de capas Shapefile (.shp),
-                visualización satelital de alta resolución y análisis de concesiones forestales en Loreto, Perú.
+                visualización satelital de alta resolución y análisis de concesiones forestales en Perú.
               </p>
             </div>
           </div>

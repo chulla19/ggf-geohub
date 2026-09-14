@@ -65,7 +65,7 @@ export default function App() {
     const portalUrl = window.location.href.split('?')[0];
     navigator.clipboard.writeText(portalUrl).then(() => {
       setIsShareCopied(true);
-      showToast('🔗 ¡Enlace del portal GGF GeoHub copiado al portapapeles!');
+      showToast('🔗 ¡Enlace del portal GeoGGF copiado al portapapeles!');
       setTimeout(() => setIsShareCopied(false), 3000);
     });
   };
@@ -92,8 +92,7 @@ export default function App() {
           </div>
           <div className="brand-title-group">
             <div className="brand-title-row">
-              <h1>GeoHub</h1>
-              <span className="brand-badge-pill">SIG Loreto</span>
+              <h1>GeoGGF</h1>
             </div>
             <p>Green Gold Forestry &bull; Perú</p>
           </div>
