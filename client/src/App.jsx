@@ -120,70 +120,33 @@ export default function App() {
 
         {/* Navbar Action */}
         <div className="nav-actions">
-          {isAdmin ? (
+          {isAdmin && (
             <button className="btn-upload-nav" onClick={() => setIsUploadOpen(true)} title="Modo Administrador: Subir nuevo shapefile">
               <UploadCloud size={16} />
-              <span>Subir Shapefile (Admin)</span>
+              <span>Subir Shapefile</span>
             </button>
-          ) : (
-            <div className="read-only-badge" title="Portal público oficial de Green Gold Forestry">
-              <ShieldCheck size={16} color="var(--primary-light)" />
-              <span>Repositorio Oficial GGF</span>
-            </div>
           )}
+
+          {/* Functional Share Button */}
+          <button
+            className={`btn-share-portal ${isShareCopied ? 'copied' : ''}`}
+            onClick={handleSharePortal}
+            title="Copiar enlace de esta página para compartir"
+          >
+            {isShareCopied ? (
+              <>
+                <Check size={15} color="#000" />
+                <span>¡Copiado!</span>
+              </>
+            ) : (
+              <>
+                <Share2 size={15} />
+                <span>Compartir</span>
+              </>
+            )}
+          </button>
         </div>
       </header>
-
-      {/* Dynamic Metrics & Functional Share Banner */}
-      <section className="stats-banner">
-        <div className="stats-group">
-          {/* Dynamic Hectares Display */}
-          <div className="stat-item dynamic-area-box">
-            <div className="stat-icon ggf-forest">
-              <Globe size={20} />
-            </div>
-            <div className="stat-text">
-              <div className="value dynamic-val">
-                {currentArea}
-              </div>
-              <div className="label dynamic-label">
-                <span>Superficie:</span>
-                <select
-                  className="area-layer-selector"
-                  value={selectedLayerId || ''}
-                  onChange={e => setSelectedLayerId(e.target.value)}
-                  title="Cambiar capa para ver superficie"
-                >
-                  {layers.map(l => (
-                    <option key={l.id} value={l.id}>
-                      {l.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Functional Share Button */}
-        <button
-          className={`btn-share-portal ${isShareCopied ? 'copied' : ''}`}
-          onClick={handleSharePortal}
-          title="Copiar enlace de esta página para compartir"
-        >
-          {isShareCopied ? (
-            <>
-              <Check size={16} color="#000" />
-              <span>¡Enlace Copiado!</span>
-            </>
-          ) : (
-            <>
-              <Share2 size={16} />
-              <span>Compartir Portal</span>
-            </>
-          )}
-        </button>
-      </section>
 
       {/* Main Views */}
       <main className="main-content">

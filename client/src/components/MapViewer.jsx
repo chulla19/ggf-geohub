@@ -71,25 +71,13 @@ function calculatePolygonArea(latlngs) {
   return area;
 }
 
-// Basemap Tile Providers
+// Basemap Tile Providers (Only Satelital HD & Calles/Ríos)
 const BASEMAP_URLS = {
   satellite: {
     name: 'Satelital HD',
     url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
     attribution: '&copy; Esri World Imagery &bull; Maxar, Earthstar Geographics',
     maxZoom: 18
-  },
-  dark: {
-    name: 'Lienzo Oscuro',
-    url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
-    attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
-    maxZoom: 19
-  },
-  topo: {
-    name: 'Topográfico',
-    url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
-    attribution: '&copy; OpenStreetMap contributors, OpenTopoMap',
-    maxZoom: 17
   },
   streets: {
     name: 'Calles & Ríos',
@@ -101,23 +89,20 @@ const BASEMAP_URLS = {
 
 // Official GGF Layer Colors
 const OFFICIAL_LAYER_COLORS = {
-  'Conseciones_unidos': '#C27107',                   // RGB(194, 113, 7)
-  'Area_Proyecto_Oct2022': '#FFB300',               // RGB(255, 179, 0)
-  'Area_Proyecto_GGL2_SinB10K120925': '#A5C639',    // RGB(165, 198, 57)
-  'CampamentosGGF': '#EF4444'                       // Rojo táctico
+  'Conseciones_unidos': '#C27107',                   // Naranja GGF
+  'Area_Proyecto_Oct2022': '#FFB300',               // Amarillo Sol GGL1
+  'Area_Proyecto_GGL2_SinB10K120925': '#A5C639',    // Verde Lima GGL2
+  'CampamentosGGF': '#EF4444'                       // Rojo táctico Campamentos
 };
 
-// Company color mappings
-const COMPANY_COLORS = {
-  'Consorcio GGF Group': '#10b981',
-  'Green Gold Forestry Peru SAC': '#34d399',
-  'Inversiones la Oroza S.R.L': '#f59e0b',
-  'Oroza': '#fbbf24',
-  'Aserradero Netrmac SAC': '#ec4899',
-  'GAYA AMAZONICA': '#3b82f6',
-  'Empresa Forestal San Regis': '#14b8a6',
-  'Forestal Ecologicos del Mazan': '#a855f7'
-};
+function isLayerActiveInFilter(layerId, filter) {
+  if (!filter || filter === 'ALL') return true;
+  if (filter === 'Concesiones GGF') return layerId === 'Conseciones_unidos';
+  if (filter === 'Proyecto GGL1') return layerId === 'Area_Proyecto_Oct2022';
+  if (filter === 'Proyecto GGL2') return layerId === 'Area_Proyecto_GGL2_SinB10K120925';
+  if (filter === 'Campamentos GGF') return layerId === 'CampamentosGGF';
+  return true;
+}
 
 export default function MapViewer({ layers, initialFocusLayerId }) {
   const mapRef = useRef(null);
@@ -137,14 +122,14 @@ export default function MapViewer({ layers, initialFocusLayerId }) {
   });
   const [soloLayerId, setSoloLayerId] = useState(null);
   const [loadingLayers, setLoadingLayers] = useState({});
-  const [colorMode, setColorMode] = useState('official'); // 'official' | 'company' | 'hectares' | 'project'
+  const [colorMode, setColorMode] = useState('official'); // 'official' | 'project' | 'camps'
   const [activeProjectFilter, setActiveProjectFilter] = useState('ALL');
   const [hoveredFeature, setHoveredFeature] = useState(null);
   const [selectedFeature, setSelectedFeature] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [allSearchItems, setAllSearchItems] = useState([]);
-  const [visibleHectares, setVisibleHectares] = useState(0);
+  const [visibleHectares, setVisibleHectares] = useState(394880);
 
   // Measurement State
   const [isMeasuring, setIsMeasuring] = useState(false);
@@ -167,6 +152,19 @@ export default function MapViewer({ layers, initialFocusLayerId }) {
     setCopiedDownloadId(layerId);
     setTimeout(() => setCopiedDownloadId(null), 2500);
   };
+
+  // Dynamic visible hectares calculation
+  useEffect(() => {
+    if (activeProjectFilter === 'ALL' || activeProjectFilter === 'Concesiones GGF') {
+      setVisibleHectares(394880.03);
+    } else if (activeProjectFilter === 'Proyecto GGL1') {
+      setVisibleHectares(183445.53);
+    } else if (activeProjectFilter === 'Proyecto GGL2') {
+      setVisibleHectares(106575.87);
+    } else if (activeProjectFilter === 'Campamentos GGF') {
+      setVisibleHectares(0);
+    }
+  }, [activeProjectFilter]);
 
   // Initialize visibility and opacities
   useEffect(() => {
@@ -198,36 +196,23 @@ export default function MapViewer({ layers, initialFocusLayerId }) {
     const p = feature.properties || {};
 
     if (colorMode === 'official') {
-      return OFFICIAL_LAYER_COLORS[layerId] || '#10b981';
-    }
-
-    if (colorMode === 'company') {
-      const tit = p.TITULAR_1 || p.comprado;
-      if (tit) {
-        for (const [comp, col] of Object.entries(COMPANY_COLORS)) {
-          if (tit.toLowerCase().includes(comp.toLowerCase())) return col;
-        }
-      }
-      return OFFICIAL_LAYER_COLORS[layerId] || '#64748b';
-    }
-
-    if (colorMode === 'hectares') {
-      const ha = p.HA || p.Ha || p.Superficie || 0;
-      if (ha > 45000) return '#ef4444'; // Rojo (Gigante)
-      if (ha > 25000) return '#f59e0b'; // Ámbar (Grande)
-      if (ha > 10000) return '#06b6d4'; // Cian (Mediano)
-      if (ha > 1000)  return '#10b981'; // Esmeralda (Pequeño)
-      return '#94a3b8';
+      return OFFICIAL_LAYER_COLORS[layerId] || '#C27107';
     }
 
     if (colorMode === 'project') {
-      const py = p.py_carbono || p.Proyecto;
-      if (py === 'Loreto 1') return '#FFB300';
-      if (py === 'Loreto 2') return '#A5C639';
-      return OFFICIAL_LAYER_COLORS[layerId] || '#3b82f6';
+      const py = p.py_carbono || p.Proyecto || (p.Nombre ? 'Concesiones GGF' : '');
+      if (layerId === 'Area_Proyecto_Oct2022' || (py && py.includes('1'))) return '#FFB300';
+      if (layerId === 'Area_Proyecto_GGL2_SinB10K120925' || (py && py.includes('2'))) return '#A5C639';
+      if (layerId === 'CampamentosGGF') return '#EF4444';
+      return '#C27107';
     }
 
-    return OFFICIAL_LAYER_COLORS[layerId] || '#10b981';
+    if (colorMode === 'camps') {
+      if (layerId === 'CampamentosGGF') return '#EF4444';
+      return '#8395a7';
+    }
+
+    return OFFICIAL_LAYER_COLORS[layerId] || '#C27107';
   }, [colorMode]);
 
   // Red Pulsing Radar Icon for Camps
@@ -311,6 +296,45 @@ export default function MapViewer({ layers, initialFocusLayerId }) {
     basemapLayerRef.current = newTileLayer;
   }, [activeBasemap]);
 
+  // Handle project filter with exclusive layer rendering and auto-fit bounds
+  const handleFilterChange = (filter) => {
+    setActiveProjectFilter(filter);
+    const map = mapInstanceRef.current;
+    if (!map) return;
+
+    setTimeout(() => {
+      let combinedBounds = null;
+      layers.forEach(layer => {
+        if (isLayerActiveInFilter(layer.id, filter) && geojsonLayersRef.current[layer.id]) {
+          const lyr = geojsonLayersRef.current[layer.id];
+          if (lyr) {
+            if (lyr.getBounds && lyr.getBounds().isValid && lyr.getBounds().isValid()) {
+              if (!combinedBounds) {
+                combinedBounds = L.latLngBounds(lyr.getBounds().getSouthWest(), lyr.getBounds().getNorthEast());
+              } else {
+                combinedBounds.extend(lyr.getBounds());
+              }
+            } else if (lyr.eachLayer) {
+              lyr.eachLayer(m => {
+                if (m.getLatLng) {
+                  if (!combinedBounds) {
+                    combinedBounds = L.latLngBounds([m.getLatLng()]);
+                  } else {
+                    combinedBounds.extend(m.getLatLng());
+                  }
+                }
+              });
+            }
+          }
+        }
+      });
+
+      if (combinedBounds && combinedBounds.isValid()) {
+        map.fitBounds(combinedBounds, { padding: [50, 50], maxZoom: 13, animate: true });
+      }
+    }, 150);
+  };
+
   // Load and style GeoJSON layers
   useEffect(() => {
     const map = mapInstanceRef.current;
@@ -319,9 +343,10 @@ export default function MapViewer({ layers, initialFocusLayerId }) {
     const collectedSearchItems = [];
 
     layers.forEach(layer => {
-      const isVisible = soloLayerId
+      const isFilterMatch = isLayerActiveInFilter(layer.id, activeProjectFilter);
+      const isVisible = (soloLayerId
         ? layer.id === soloLayerId
-        : layerVisibility[layer.id] !== false;
+        : layerVisibility[layer.id] !== false) && isFilterMatch;
 
       const layerOpacity = layerOpacities[layer.id] ?? 0.40;
 
@@ -338,31 +363,6 @@ export default function MapViewer({ layers, initialFocusLayerId }) {
           leafletLayer.eachLayer(subLayer => {
             const feat = subLayer.feature;
             if (!feat) return;
-
-            // Apply project filter
-            let passesFilter = true;
-            if (activeProjectFilter !== 'ALL') {
-              const p = feat.properties || {};
-              const py = p.py_carbono || p.Proyecto || (p.Nombre ? 'Concesiones GGF' : '');
-              if (activeProjectFilter === 'Campamentos GGF') {
-                passesFilter = feat.geometry.type === 'Point';
-              } else if (activeProjectFilter === 'Concesiones GGF') {
-                passesFilter = layer.id === 'Conseciones_unidos';
-              } else if (activeProjectFilter === 'Proyecto GGL1') {
-                passesFilter = layer.id === 'Area_Proyecto_Oct2022' || py === 'Loreto 1';
-              } else if (activeProjectFilter === 'Proyecto GGL2') {
-                passesFilter = layer.id === 'Area_Proyecto_GGL2_SinB10K120925' || py === 'Loreto 2';
-              } else {
-                passesFilter = py === activeProjectFilter;
-              }
-            }
-
-            if (!passesFilter) {
-              if (subLayer.setStyle) {
-                subLayer.setStyle({ opacity: 0, fillOpacity: 0 });
-              }
-              return;
-            }
 
             const col = getFeatureColor(feat, layer.id);
             if (subLayer.setStyle && feat.geometry.type !== 'Point') {
@@ -750,34 +750,27 @@ Situación: ${p.SITUA_OPER || 'Activa'}
             <Palette size={17} color="var(--primary)" />
             <span>Simbología Dinámica</span>
           </div>
-          <div className="symbology-btn-group">
+          <div className="symbology-btn-group" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
             <button
               className={`symbology-btn ${colorMode === 'official' ? 'active' : ''}`}
               onClick={() => setColorMode('official')}
-              title="Colores Oficiales GGF (Concesiones marrón-oro, GGL1 naranja, GGL2 verde, Campamentos rojo)"
+              title="Colores Oficiales GGF por Concesión (Naranja #C27107, Oro #FFB300, Verde #A5C639)"
             >
-              🌿 Oficiales GGF
+              🌿 Por Concesión
             </button>
             <button
               className={`symbology-btn ${colorMode === 'project' ? 'active' : ''}`}
               onClick={() => setColorMode('project')}
-              title="Colorear por Proyecto de Carbono (Loreto 1, Loreto 2)"
+              title="Colorear por Proyecto de Carbono (GGL1 vs GGL2)"
             >
               🌳 Por Proyecto
             </button>
             <button
-              className={`symbology-btn ${colorMode === 'company' ? 'active' : ''}`}
-              onClick={() => setColorMode('company')}
-              title="Colorear por Empresa Titular"
+              className={`symbology-btn ${colorMode === 'camps' ? 'active' : ''}`}
+              onClick={() => setColorMode('camps')}
+              title="Destacar Balizas y Campamentos GGF"
             >
-              🏢 Por Titular
-            </button>
-            <button
-              className={`symbology-btn ${colorMode === 'hectares' ? 'active' : ''}`}
-              onClick={() => setColorMode('hectares')}
-              title="Gradiente por tamaño en hectáreas"
-            >
-              🔥 Por Hectáreas
+              📍 Por Campamentos
             </button>
           </div>
         </div>
@@ -786,16 +779,23 @@ Situación: ${p.SITUA_OPER || 'Activa'}
         <div>
           <div className="map-sidebar-title" style={{ marginBottom: '0.45rem' }}>
             <Sliders size={17} color="var(--primary)" />
-            <span>Filtrar Territorio</span>
+            <span>Filtrar Territorio Activo</span>
           </div>
           <div className="map-filter-pills">
-            {['ALL', 'Concesiones GGF', 'Proyecto GGL1', 'Proyecto GGL2', 'Campamentos GGF'].map(filter => (
+            {[
+              { id: 'ALL', label: 'Todo' },
+              { id: 'Concesiones GGF', label: '🌲 Concesiones' },
+              { id: 'Proyecto GGL1', label: '🌳 Proyecto GGL1' },
+              { id: 'Proyecto GGL2', label: '🍃 Proyecto GGL2' },
+              { id: 'Campamentos GGF', label: '📍 Campamentos' }
+            ].map(item => (
               <button
-                key={filter}
-                className={`filter-pill-btn ${activeProjectFilter === filter ? 'active' : ''}`}
-                onClick={() => setActiveProjectFilter(filter)}
+                key={item.id}
+                className={`filter-pill-btn ${activeProjectFilter === item.id ? 'active' : ''}`}
+                onClick={() => handleFilterChange(item.id)}
+                title={`Mostrar únicamente ${item.label} en el mapa`}
               >
-                {filter === 'ALL' ? 'Todo' : filter}
+                {item.label}
               </button>
             ))}
           </div>
