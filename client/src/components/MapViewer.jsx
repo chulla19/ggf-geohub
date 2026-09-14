@@ -73,19 +73,21 @@ function calculatePolygonArea(latlngs) {
   return area;
 }
 
-// Basemap Tile Providers (Only Satelital HD & Calles/Ríos)
+// Basemap Tile Providers (Only Satelital HD & Calles/Ríos with Ultra Deep Zoom up to Level 22)
 const BASEMAP_URLS = {
   satellite: {
     name: 'Satelital HD',
-    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-    attribution: '&copy; Esri World Imagery &bull; Maxar, Earthstar Geographics',
-    maxZoom: 18
+    url: 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
+    attribution: '&copy; Google Satellite Imagery &bull; CNES / Airbus / Maxar',
+    maxZoom: 22,
+    maxNativeZoom: 20
   },
   streets: {
     name: 'Calles & Ríos',
     url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     attribution: '&copy; OpenStreetMap contributors',
-    maxZoom: 19
+    maxZoom: 22,
+    maxNativeZoom: 19
   }
 };
 
@@ -222,16 +224,19 @@ export default function MapViewer({ layers, initialFocusLayerId }) {
     const map = L.map(mapRef.current, {
       center: [-2.9, -73.8],
       zoom: 8,
+      minZoom: 4,
+      maxZoom: 22,
       zoomControl: false,
       attributionControl: true
     });
 
     L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-    const baseCfg = BASEMAP_URLS[activeBasemap];
+    const baseCfg = BASEMAP_URLS[activeBasemap] || BASEMAP_URLS.satellite;
     const tileLayer = L.tileLayer(baseCfg.url, {
       attribution: baseCfg.attribution,
-      maxZoom: baseCfg.maxZoom
+      maxZoom: baseCfg.maxZoom || 22,
+      maxNativeZoom: baseCfg.maxNativeZoom || 20
     }).addTo(map);
 
     basemapLayerRef.current = tileLayer;
@@ -274,7 +279,8 @@ export default function MapViewer({ layers, initialFocusLayerId }) {
     const baseCfg = BASEMAP_URLS[activeBasemap] || BASEMAP_URLS.satellite;
     const newTileLayer = L.tileLayer(baseCfg.url, {
       attribution: baseCfg.attribution,
-      maxZoom: baseCfg.maxZoom
+      maxZoom: baseCfg.maxZoom || 22,
+      maxNativeZoom: baseCfg.maxNativeZoom || 20
     }).addTo(mapInstanceRef.current);
 
     newTileLayer.bringToBack();
