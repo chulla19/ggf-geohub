@@ -32,6 +32,7 @@ import {
 } from 'lucide-react';
 
 import { fetchGeoJsonData, getDownloadUrl, getAbsoluteDownloadUrl } from '../utils/api';
+import ggfLogoOrange from '../assets/logos/ggf-logo-orange.png';
 
 // Proj4 definitions for UTM Zone 18S & WGS84
 const utm18sDef = "+proj=utm +zone=18 +south +datum=WGS84 +units=m +no_defs";
@@ -940,12 +941,9 @@ Situación: ${p.SITUA_OPER || 'Activa'}
         {/* Floating GGF Institutional Badge on Map */}
         <div className="map-ggf-watermark">
           <img
-            src="/logos/ggf-logo-orange.png"
+            src={ggfLogoOrange}
             alt="GGF Group"
             className="map-watermark-logo"
-            onError={e => {
-              e.currentTarget.src = '/logos/Logotipo_-_Naranja-SINFONDO.png';
-            }}
           />
           <div className="map-watermark-text">
             <span className="map-watermark-title">GREEN GOLD FORESTRY</span>

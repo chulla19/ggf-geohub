@@ -18,6 +18,8 @@ import DataTable from './components/DataTable';
 import UploadModal from './components/UploadModal';
 
 import { fetchLayersData } from './utils/api';
+import ggfLogoOrange from './assets/logos/ggf-logo-orange.png';
+import ggfLogoWhite from './assets/logos/ggf-logo-white.png';
 
 export default function App() {
   const isAdmin = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('admin') === 'true';
@@ -83,12 +85,9 @@ export default function App() {
         <div className="brand" onClick={() => setActiveTab('catalog')}>
           <div className="brand-logo-container">
             <img
-              src="/logos/ggf-logo-orange.png"
+              src={ggfLogoOrange}
               alt="Green Gold Forestry"
               className="brand-logo-img"
-              onError={e => {
-                e.currentTarget.src = '/logos/Logotipo_-_Naranja-SINFONDO.png';
-              }}
             />
           </div>
           <div className="brand-title-group">
@@ -235,12 +234,9 @@ export default function App() {
           <div className="footer-brand-col">
             <div className="footer-logo-row">
               <img
-                src="/logos/ggf-logo-white.png"
+                src={ggfLogoWhite}
                 alt="GGF Group"
                 className="footer-logo-img"
-                onError={e => {
-                  e.currentTarget.src = '/logos/ggf-logo-orange.png';
-                }}
               />
               <div>
                 <h4>Green Gold Forestry</h4>

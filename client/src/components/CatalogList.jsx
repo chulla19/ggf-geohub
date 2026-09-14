@@ -13,6 +13,7 @@ import {
   ExternalLink
 } from 'lucide-react';
 import { getDownloadUrl, getAbsoluteDownloadUrl } from '../utils/api';
+import ggfLogoOrange from '../assets/logos/ggf-logo-orange.png';
 
 export default function CatalogList({
   layers,
@@ -66,12 +67,9 @@ export default function CatalogList({
         <div className="catalog-hero-content">
           <div className="catalog-hero-brand">
             <img
-              src="/logos/ggf-logo-orange.png"
+              src={ggfLogoOrange}
               alt="GGF Group"
               className="catalog-hero-logo"
-              onError={e => {
-                e.currentTarget.src = '/logos/Logotipo_-_Naranja-SINFONDO.png';
-              }}
             />
             <div className="catalog-hero-text">
               <div className="catalog-hero-badge">
