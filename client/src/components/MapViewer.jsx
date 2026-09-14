@@ -125,6 +125,7 @@ export default function MapViewer({ layers, initialFocusLayerId }) {
   const [soloLayerId, setSoloLayerId] = useState(null);
   const [loadingLayers, setLoadingLayers] = useState({});
   const [expandedLayers, setExpandedLayers] = useState({});
+  const [isLayersMenuOpen, setIsLayersMenuOpen] = useState(true);
   const [colorMode, setColorMode] = useState('official'); // 'official' | 'project' | 'camps'
   const [activeProjectFilter, setActiveProjectFilter] = useState('ALL');
   const [hoveredFeature, setHoveredFeature] = useState(null);
@@ -754,164 +755,190 @@ Situación: ${p.SITUA_OPER || 'Activa'}
           </div>
         </div>
 
-        {/* Independent Layer Cards List as Collapsible Dropdown Menu */}
-        <div>
-          <div className="map-sidebar-title" style={{ marginBottom: '0.6rem', justifyContent: 'space-between' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <Layers size={17} color="var(--primary)" />
-              <span>Control de Capas ({layers.length})</span>
+        {/* Master Collapsible Layers Accordion Panel */}
+        <div className={`layers-accordion-panel ${isLayersMenuOpen ? 'panel-open' : 'panel-closed'}`}>
+          {/* Main Dropdown Clickable Header */}
+          <div
+            className="layers-master-header"
+            onClick={() => setIsLayersMenuOpen(prev => !prev)}
+            title={isLayersMenuOpen ? "Ocultar / Colapsar menú de capas" : "Desplegar menú de capas"}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem' }}>
+              <Layers size={18} color="var(--primary)" />
+              <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
+                <span className="layers-master-title">Control de Capas</span>
+                <span className="layers-master-subtitle">
+                  {layers.filter(l => soloLayerId ? l.id === soloLayerId : layerVisibility[l.id] !== false).length} de {layers.length} activas
+                </span>
+              </div>
             </div>
-            <button
-              className="btn-toggle-all-layers"
-              onClick={() => {
-                const allExpanded = layers.every(l => expandedLayers[l.id]);
-                const next = {};
-                layers.forEach(l => { next[l.id] = !allExpanded; });
-                setExpandedLayers(next);
-              }}
-              title="Expandir o colapsar todas las capas"
-            >
-              {layers.every(l => expandedLayers[l.id]) ? 'Colapsar todo' : 'Expandir todo'}
-            </button>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+              <span className={`master-dropdown-chevron ${isLayersMenuOpen ? 'chevron-up' : 'chevron-down'}`}>
+                {isLayersMenuOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+              </span>
+            </div>
           </div>
 
-          <div className="layers-cards-container">
-            {layers.map(layer => {
-              const isVisible = soloLayerId ? layer.id === soloLayerId : layerVisibility[layer.id] !== false;
-              const isSolo = soloLayerId === layer.id;
-              const isExpanded = !!expandedLayers[layer.id];
-              const currentOpacity = layerOpacities[layer.id] ?? 0.40;
-              const officialColor = OFFICIAL_LAYER_COLORS[layer.id] || layer.color;
+          {/* Collapsible Body */}
+          {isLayersMenuOpen && (
+            <div className="layers-master-body">
+              <div className="layers-master-toolbar">
+                <span className="layers-count-badge">{layers.length} capas</span>
+                <button
+                  className="btn-toggle-all-layers"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    const allExpanded = layers.every(l => expandedLayers[l.id]);
+                    const next = {};
+                    layers.forEach(l => { next[l.id] = !allExpanded; });
+                    setExpandedLayers(next);
+                  }}
+                  title="Expandir o colapsar todas las opciones individuales"
+                >
+                  {layers.every(l => expandedLayers[l.id]) ? 'Colapsar todo' : 'Expandir todo'}
+                </button>
+              </div>
 
-              return (
-                <div key={layer.id} className={`layer-item-card ${isExpanded ? 'is-expanded' : 'is-collapsed'}`}>
-                  {/* Compact Header Row */}
-                  <div className="layer-header-row">
-                    <div
-                      className="layer-title-group"
-                      onClick={() =>
-                        setLayerVisibility(prev => ({
-                          ...prev,
-                          [layer.id]: !prev[layer.id]
-                        }))
-                      }
-                      title="Activar o desactivar visibilidad en el mapa"
-                    >
-                      <input
-                        type="checkbox"
-                        checked={isVisible}
-                        onChange={() => {}}
-                        style={{ accentColor: officialColor, cursor: 'pointer' }}
-                      />
-                      <span
-                        className="layer-color-dot"
-                        style={{ background: officialColor }}
-                      />
-                      <span className="layer-name-txt" style={{ color: isVisible ? '#fff' : 'var(--text-muted)' }}>
-                        {layer.name}
-                      </span>
-                    </div>
+              <div className="layers-cards-container">
+                {layers.map(layer => {
+                  const isVisible = soloLayerId ? layer.id === soloLayerId : layerVisibility[layer.id] !== false;
+                  const isSolo = soloLayerId === layer.id;
+                  const isExpanded = !!expandedLayers[layer.id];
+                  const currentOpacity = layerOpacities[layer.id] ?? 0.40;
+                  const officialColor = OFFICIAL_LAYER_COLORS[layer.id] || layer.color;
 
-                    <div className="layer-actions-group">
-                      <button
-                        className="btn-layer-action"
-                        title="Enfocar extensión de esta capa"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleZoomToLayer(layer.id);
-                        }}
-                      >
-                        <Maximize2 size={13} />
-                      </button>
-
-                      <button
-                        className="btn-layer-action btn-dropdown-toggle"
-                        title={isExpanded ? "Cerrar menú de capa" : "Desplegar opciones y descargas"}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setExpandedLayers(prev => ({ ...prev, [layer.id]: !prev[layer.id] }));
-                        }}
-                      >
-                        {isExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Collapsible Dropdown Content */}
-                  {isExpanded && (
-                    <div className="layer-dropdown-content">
-                      {/* Opacity Slider */}
-                      {layer.id !== 'CampamentosGGF' && (
-                        <div className="layer-opacity-row">
-                          <span>Opacidad:</span>
+                  return (
+                    <div key={layer.id} className={`layer-item-card ${isExpanded ? 'is-expanded' : 'is-collapsed'}`}>
+                      {/* Compact Header Row */}
+                      <div className="layer-header-row">
+                        <div
+                          className="layer-title-group"
+                          onClick={() =>
+                            setLayerVisibility(prev => ({
+                              ...prev,
+                              [layer.id]: !prev[layer.id]
+                            }))
+                          }
+                          title="Activar o desactivar visibilidad en el mapa"
+                        >
                           <input
-                            type="range"
-                            min="0.05"
-                            max="0.95"
-                            step="0.05"
-                            value={currentOpacity}
-                            onChange={e => handleOpacityChange(layer.id, parseFloat(e.target.value))}
-                            className="layer-opacity-slider"
+                            type="checkbox"
+                            checked={isVisible}
+                            onChange={() => {}}
+                            style={{ accentColor: officialColor, cursor: 'pointer' }}
                           />
-                          <span style={{ width: '28px', textAlign: 'right', fontWeight: 600 }}>
-                            {Math.round(currentOpacity * 100)}%
+                          <span
+                            className="layer-color-dot"
+                            style={{ background: officialColor }}
+                          />
+                          <span className="layer-name-txt" style={{ color: isVisible ? '#fff' : 'var(--text-muted)' }}>
+                            {layer.name}
                           </span>
+                        </div>
+
+                        <div className="layer-actions-group">
+                          <button
+                            className="btn-layer-action"
+                            title="Enfocar extensión de esta capa"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleZoomToLayer(layer.id);
+                            }}
+                          >
+                            <Maximize2 size={13} />
+                          </button>
+
+                          <button
+                            className="btn-layer-action btn-dropdown-toggle"
+                            title={isExpanded ? "Cerrar opciones de capa" : "Desplegar opciones y descargas"}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setExpandedLayers(prev => ({ ...prev, [layer.id]: !prev[layer.id] }));
+                            }}
+                          >
+                            {isExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Collapsible Dropdown Content */}
+                      {isExpanded && (
+                        <div className="layer-dropdown-content">
+                          {/* Opacity Slider */}
+                          {layer.id !== 'CampamentosGGF' && (
+                            <div className="layer-opacity-row">
+                              <span>Opacidad:</span>
+                              <input
+                                type="range"
+                                min="0.05"
+                                max="0.95"
+                                step="0.05"
+                                value={currentOpacity}
+                                onChange={e => handleOpacityChange(layer.id, parseFloat(e.target.value))}
+                                className="layer-opacity-slider"
+                              />
+                              <span style={{ width: '28px', textAlign: 'right', fontWeight: 600 }}>
+                                {Math.round(currentOpacity * 100)}%
+                              </span>
+                            </div>
+                          )}
+
+                          {/* Metrics Summary */}
+                          <div className="layer-dropdown-metrics">
+                            <span>{layer.recordsCount} registros</span>
+                            {layer.totalHectares && (
+                              <span style={{ color: 'var(--ggf-gold)', fontWeight: 700 }}>
+                                {layer.totalHectares.toLocaleString()} ha
+                              </span>
+                            )}
+                          </div>
+
+                          {/* Quick Action & Downloads Row */}
+                          <div className="layer-dropdown-downloads">
+                            <button
+                              className={`btn-layer-solo-pill ${isSolo ? 'active-solo' : ''}`}
+                              title={isSolo ? "Desactivar modo Solo" : "Aislar esta capa en el mapa"}
+                              onClick={() => handleToggleSolo(layer.id)}
+                            >
+                              {isSolo ? 'Modo Solo Activo' : 'Aislar (Solo)'}
+                            </button>
+
+                            <div className="quick-dl-pills-wrap">
+                              <a
+                                href={getDownloadUrl(layer.id, 'shp')}
+                                download={`${layer.id}_SHP.zip`}
+                                className="quick-dl-pill shp"
+                                title="Descargar Shapefile ZIP (.shp, .dbf, .prj, .shx)"
+                              >
+                                <Download size={11} /> SHP
+                              </a>
+                              <a
+                                href={getDownloadUrl(layer.id, 'geojson')}
+                                download={`${layer.id}.geojson`}
+                                className="quick-dl-pill geojson"
+                                title="Descargar GeoJSON WGS84"
+                              >
+                                GeoJSON
+                              </a>
+                              <a
+                                href={getDownloadUrl(layer.id, 'csv')}
+                                download={`${layer.id}_atributos.csv`}
+                                className="quick-dl-pill csv"
+                                title="Descargar CSV para Excel"
+                              >
+                                CSV
+                              </a>
+                            </div>
+                          </div>
                         </div>
                       )}
-
-                      {/* Metrics Summary */}
-                      <div className="layer-dropdown-metrics">
-                        <span>{layer.recordsCount} registros</span>
-                        {layer.totalHectares && (
-                          <span style={{ color: 'var(--ggf-gold)', fontWeight: 700 }}>
-                            {layer.totalHectares.toLocaleString()} ha
-                          </span>
-                        )}
-                      </div>
-
-                      {/* Quick Action & Downloads Row */}
-                      <div className="layer-dropdown-downloads">
-                        <button
-                          className={`btn-layer-solo-pill ${isSolo ? 'active-solo' : ''}`}
-                          title={isSolo ? "Desactivar modo Solo" : "Aislar esta capa en el mapa"}
-                          onClick={() => handleToggleSolo(layer.id)}
-                        >
-                          {isSolo ? 'Modo Solo Activo' : 'Aislar (Solo)'}
-                        </button>
-
-                        <div className="quick-dl-pills-wrap">
-                          <a
-                            href={getDownloadUrl(layer.id, 'shp')}
-                            download={`${layer.id}_SHP.zip`}
-                            className="quick-dl-pill shp"
-                            title="Descargar Shapefile ZIP (.shp, .dbf, .prj, .shx)"
-                          >
-                            <Download size={11} /> SHP
-                          </a>
-                          <a
-                            href={getDownloadUrl(layer.id, 'geojson')}
-                            download={`${layer.id}.geojson`}
-                            className="quick-dl-pill geojson"
-                            title="Descargar GeoJSON WGS84"
-                          >
-                            GeoJSON
-                          </a>
-                          <a
-                            href={getDownloadUrl(layer.id, 'csv')}
-                            download={`${layer.id}_atributos.csv`}
-                            className="quick-dl-pill csv"
-                            title="Descargar CSV para Excel"
-                          >
-                            CSV
-                          </a>
-                        </div>
-                      </div>
                     </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
       </div>
 

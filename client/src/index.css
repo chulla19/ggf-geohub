@@ -1149,6 +1149,92 @@ body {
   font-weight: 700;
 }
 
+/* Master Collapsible Layers Accordion Panel */
+.layers-accordion-panel {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.layers-accordion-panel.panel-open {
+  border-color: rgba(194, 113, 7, 0.4);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+.layers-accordion-panel.panel-closed {
+  border-color: var(--border-card);
+}
+
+.layers-master-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0.9rem;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(16, 28, 21, 0.8) 100%);
+  cursor: pointer;
+  user-select: none;
+  transition: var(--transition);
+}
+
+.layers-master-header:hover {
+  background: linear-gradient(135deg, rgba(47, 92, 36, 0.4) 0%, rgba(194, 113, 7, 0.2) 100%);
+}
+
+.layers-master-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.02em;
+}
+
+.layers-master-subtitle {
+  font-size: 0.68rem;
+  color: var(--ggf-orange-light);
+  font-weight: 600;
+}
+
+.master-dropdown-chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ggf-gold);
+  background: rgba(255, 179, 0, 0.12);
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 179, 0, 0.25);
+  transition: transform 0.2s ease;
+}
+
+.layers-master-header:hover .master-dropdown-chevron {
+  background: rgba(255, 179, 0, 0.25);
+  transform: scale(1.08);
+}
+
+.layers-master-body {
+  padding: 0.75rem;
+  background: var(--bg-surface);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  animation: fadeIn 0.2s ease-out;
+}
+
+.layers-master-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.layers-count-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
 /* Independent Layer Card in Sidebar as Collapsible Dropdown */
 .btn-toggle-all-layers {
   background: transparent;
