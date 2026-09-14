@@ -93,12 +93,12 @@ const BASEMAP_URLS = {
   }
 };
 
-// Official GGF Layer Colors
+// Official GGF Layer Colors (GGL1: Verde #22C55E, GGL2: Naranja Claro #FB923C, Concesiones: Naranja GGF #C27107, Campamentos: Rojo #EF4444)
 const OFFICIAL_LAYER_COLORS = {
-  'Conseciones_unidos': '#C27107',                   // Naranja GGF
-  'Area_Proyecto_Oct2022': '#FFB300',               // Amarillo Sol GGL1
-  'Area_Proyecto_GGL2_SinB10K120925': '#A5C639',    // Verde Lima GGL2
-  'CampamentosGGF': '#EF4444'                       // Rojo táctico Campamentos
+  'Conseciones_unidos': '#C27107',                   // Naranja Oficial GGF
+  'Area_Proyecto_Oct2022': '#22C55E',               // Verde Proyecto GGL1
+  'Area_Proyecto_GGL2_SinB10K120925': '#FB923C',    // Naranja Claro Proyecto GGL2
+  'CampamentosGGF': '#EF4444'                       // Rojo Campamentos
 };
 
 function isLayerActiveInFilter(layerId, filter) {
@@ -778,10 +778,10 @@ Situación: ${p.SITUA_OPER || 'Activa'}
           <div className="map-filter-pills">
             {[
               { id: 'ALL', label: 'Todo' },
-              { id: 'Concesiones GGF', label: '🌲 Concesiones' },
-              { id: 'Proyecto GGL1', label: '🌳 Proyecto GGL1' },
-              { id: 'Proyecto GGL2', label: '🍃 Proyecto GGL2' },
-              { id: 'Campamentos GGF', label: '📍 Campamentos' }
+              { id: 'Concesiones GGF', label: 'Concesiones GGF' },
+              { id: 'Proyecto GGL1', label: 'Proyecto GGL1' },
+              { id: 'Proyecto GGL2', label: 'Proyecto GGL2' },
+              { id: 'Campamentos GGF', label: 'Campamentos GGF' }
             ].map(item => (
               <button
                 key={item.id}
@@ -1105,7 +1105,7 @@ Situación: ${p.SITUA_OPER || 'Activa'}
             >
               {Object.entries(BASEMAP_URLS).map(([key, cfg]) => (
                 <option key={key} value={key} style={{ background: '#0f172a' }}>
-                  🗺️ {cfg.name}
+                  {cfg.name}
                 </option>
               ))}
             </select>
@@ -1464,9 +1464,9 @@ Situación: ${p.SITUA_OPER || 'Activa'}
             className="gis-legend-header"
             onClick={() => setIsLegendOpen(!isLegendOpen)}
           >
-            <span>🌿 Leyenda Oficial GGF</span>
+            <span>Leyenda Oficial GGF</span>
             <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
-              {isLegendOpen ? '▲ Ocultar' : '▼ Mostrar'}
+              {isLegendOpen ? 'Ocultar' : 'Mostrar'}
             </span>
           </div>
 
@@ -1474,19 +1474,19 @@ Situación: ${p.SITUA_OPER || 'Activa'}
             <div style={{ marginTop: '0.35rem' }}>
               <div className="gis-legend-item">
                 <div className="gis-legend-swatch" style={{ background: '#C27107' }} />
-                <span>Concesiones GGF (15 unidades)</span>
+                <span>Concesiones GGF</span>
               </div>
               <div className="gis-legend-item">
-                <div className="gis-legend-swatch" style={{ background: '#FFB300' }} />
-                <span>Proyecto GGL1 (Oct 2022)</span>
+                <div className="gis-legend-swatch" style={{ background: '#22C55E' }} />
+                <span>Proyecto GGL1</span>
               </div>
               <div className="gis-legend-item">
-                <div className="gis-legend-swatch" style={{ background: '#A5C639' }} />
-                <span>Proyecto GGL2 (Área neta)</span>
+                <div className="gis-legend-swatch" style={{ background: '#FB923C' }} />
+                <span>Proyecto GGL2</span>
               </div>
               <div className="gis-legend-item">
                 <div className="gis-legend-swatch" style={{ background: '#EF4444', borderRadius: '50%' }} />
-                <span>Campamentos GGF (Balizas)</span>
+                <span>Campamentos GGF</span>
               </div>
             </div>
           )}

@@ -32,7 +32,7 @@ const LAYER_CONFIG = {
     project: 'Proyecto GGL1',
     category: 'Límites & Cobertura',
     description: 'Área del Proyecto GGL1 y cobertura vegetal (Línea base Oct 2022) con zonificación de bosque alto y fisiografía.',
-    color: '#FFB300',
+    color: '#22C55E',
     tags: ['Proyecto GGL1', 'Cobertura Vegetal', 'Fisiografía', 'Oct 2022']
   },
   'Area_Proyecto_GGL2_SinB10K120925': {
@@ -40,7 +40,7 @@ const LAYER_CONFIG = {
     project: 'Proyecto GGL2',
     category: 'Límites de Proyecto',
     description: 'Área neta elegible del Proyecto GGL2 (Loreto 2) con exclusión de zona de amortiguamiento de 10 km / comunidades nativas.',
-    color: '#A5C639',
+    color: '#FB923C',
     tags: ['Proyecto GGL2', 'Área Neta', 'Buffer 10K', 'Loreto 2']
   },
   'CampamentosGGF': {

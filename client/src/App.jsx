@@ -151,7 +151,6 @@ export default function App() {
       <main className={`main-content ${activeTab === 'map' ? 'main-content-map' : ''}`}>
         {loading ? (
           <div style={{ textAlign: 'center', padding: '4rem', color: 'var(--text-muted)' }}>
-            <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>🌲</div>
             <p>Cargando capas espaciales de Green Gold Forestry...</p>
           </div>
         ) : (
@@ -197,9 +196,9 @@ export default function App() {
 
           <div className="footer-meta-col">
             <div className="footer-pill-group">
-              <span className="footer-pill">📍 Loreto &bull; Amazonía Peruana</span>
-              <span className="footer-pill">🌐 EPSG: 32718 (UTM 18S)</span>
-              <span className="footer-pill">🌲 394,880+ Hectáreas Protegidas</span>
+              <span className="footer-pill">Loreto &bull; Amazonía Peruana</span>
+              <span className="footer-pill">EPSG: 32718 (UTM 18S)</span>
+              <span className="footer-pill">394,880+ Hectáreas Protegidas</span>
             </div>
             <p className="footer-copy">
               &copy; {new Date().getFullYear()} Green Gold Forestry (GGF Group). Todos los derechos reservados.
