@@ -149,7 +149,7 @@ export default function App() {
       </header>
 
       {/* Main Views */}
-      <main className="main-content">
+      <main className={`main-content ${activeTab === 'map' ? 'main-content-map' : ''}`}>
         {loading ? (
           <div style={{ textAlign: 'center', padding: '4rem', color: 'var(--text-muted)' }}>
             <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>🌲</div>

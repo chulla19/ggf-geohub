@@ -234,7 +234,7 @@ export default function MapViewer({ layers, initialFocusLayerId }) {
     if (!mapRef.current || mapInstanceRef.current) return;
 
     const map = L.map(mapRef.current, {
-      center: [-2.9, -73.8],
+      center: [-2.65, -74.15],
       zoom: 8,
       minZoom: 5,
       maxZoom: 19,
@@ -510,12 +510,21 @@ export default function MapViewer({ layers, initialFocusLayerId }) {
               leafletGeoJson.bringToFront();
             }
 
-            // Auto fit initial focus
-            if (layer.id === initialFocusLayerId || (!initialFocusLayerId && layer.id === 'Conseciones_unidos')) {
-              try {
-                map.fitBounds(leafletGeoJson.getBounds(), { padding: [35, 35] });
-              } catch (e) {}
-            }
+            // Auto-frame all loaded layers or specific focused layer
+            try {
+              if (initialFocusLayerId && layer.id === initialFocusLayerId) {
+                map.fitBounds(leafletGeoJson.getBounds(), { padding: [45, 45] });
+              } else if (!initialFocusLayerId) {
+                const loadedLayers = Object.values(geojsonLayersRef.current).filter(Boolean);
+                if (loadedLayers.length > 0) {
+                  const group = L.featureGroup(loadedLayers);
+                  const b = group.getBounds();
+                  if (b && b.isValid && b.isValid()) {
+                    map.fitBounds(b, { padding: [45, 45], maxZoom: 12 });
+                  }
+                }
+              }
+            } catch (e) {}
           })
           .catch(err => console.error(`Error loading layer ${layer.id}:`, err))
           .finally(() => {
