@@ -191,29 +191,10 @@ export default function MapViewer({ layers, initialFocusLayerId }) {
     }
   }, [layers]);
 
-  // Determine feature color based on mode
+  // Determine feature color (Official GGF Colors)
   const getFeatureColor = useCallback((feature, layerId) => {
-    const p = feature.properties || {};
-
-    if (colorMode === 'official') {
-      return OFFICIAL_LAYER_COLORS[layerId] || '#C27107';
-    }
-
-    if (colorMode === 'project') {
-      const py = p.py_carbono || p.Proyecto || (p.Nombre ? 'Concesiones GGF' : '');
-      if (layerId === 'Area_Proyecto_Oct2022' || (py && py.includes('1'))) return '#FFB300';
-      if (layerId === 'Area_Proyecto_GGL2_SinB10K120925' || (py && py.includes('2'))) return '#A5C639';
-      if (layerId === 'CampamentosGGF') return '#EF4444';
-      return '#C27107';
-    }
-
-    if (colorMode === 'camps') {
-      if (layerId === 'CampamentosGGF') return '#EF4444';
-      return '#8395a7';
-    }
-
     return OFFICIAL_LAYER_COLORS[layerId] || '#C27107';
-  }, [colorMode]);
+  }, []);
 
   // Red Pulsing Radar Icon for Camps
   const createRadarIcon = (campName) => {
@@ -744,37 +725,6 @@ Situación: ${p.SITUA_OPER || 'Activa'}
     <div className="map-layout">
       {/* Sidebar Controls */}
       <div className="map-sidebar">
-        {/* Simbología Dinámica */}
-        <div>
-          <div className="map-sidebar-title" style={{ marginBottom: '0.45rem' }}>
-            <Palette size={17} color="var(--primary)" />
-            <span>Simbología Dinámica</span>
-          </div>
-          <div className="symbology-btn-group" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
-            <button
-              className={`symbology-btn ${colorMode === 'official' ? 'active' : ''}`}
-              onClick={() => setColorMode('official')}
-              title="Colores Oficiales GGF por Concesión (Naranja #C27107, Oro #FFB300, Verde #A5C639)"
-            >
-              🌿 Por Concesión
-            </button>
-            <button
-              className={`symbology-btn ${colorMode === 'project' ? 'active' : ''}`}
-              onClick={() => setColorMode('project')}
-              title="Colorear por Proyecto de Carbono (GGL1 vs GGL2)"
-            >
-              🌳 Por Proyecto
-            </button>
-            <button
-              className={`symbology-btn ${colorMode === 'camps' ? 'active' : ''}`}
-              onClick={() => setColorMode('camps')}
-              title="Destacar Balizas y Campamentos GGF"
-            >
-              📍 Por Campamentos
-            </button>
-          </div>
-        </div>
-
         {/* Dynamic Project Filter Pills */}
         <div>
           <div className="map-sidebar-title" style={{ marginBottom: '0.45rem' }}>
