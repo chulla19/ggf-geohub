@@ -937,6 +937,22 @@ Situación: ${p.SITUA_OPER || 'Activa'}
       <div className="map-canvas-container">
         <div id="gis-map" ref={mapRef} />
 
+        {/* Floating GGF Institutional Badge on Map */}
+        <div className="map-ggf-watermark">
+          <img
+            src="/logos/ggf-logo-orange.png"
+            alt="GGF Group"
+            className="map-watermark-logo"
+            onError={e => {
+              e.currentTarget.src = '/logos/Logotipo_-_Naranja-SINFONDO.png';
+            }}
+          />
+          <div className="map-watermark-text">
+            <span className="map-watermark-title">GREEN GOLD FORESTRY</span>
+            <span className="map-watermark-sub">SIG Loreto &bull; UTM 18S</span>
+          </div>
+        </div>
+
         {/* Floating GIS Toolbar (Top Right) */}
         <div className="gis-floating-toolbar">
           {/* Smart Search Bar */}

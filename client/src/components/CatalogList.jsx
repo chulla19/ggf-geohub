@@ -61,6 +61,50 @@ export default function CatalogList({
 
   return (
     <div>
+      {/* Corporate Hero Banner */}
+      <div className="catalog-hero-card">
+        <div className="catalog-hero-content">
+          <div className="catalog-hero-brand">
+            <img
+              src="/logos/ggf-logo-orange.png"
+              alt="GGF Group"
+              className="catalog-hero-logo"
+              onError={e => {
+                e.currentTarget.src = '/logos/Logotipo_-_Naranja-SINFONDO.png';
+              }}
+            />
+            <div className="catalog-hero-text">
+              <div className="catalog-hero-badge">
+                <span className="badge-dot"></span>
+                <span>Portal Corporativo de Información Territorial</span>
+              </div>
+              <h2>Green Gold Forestry GeoHub</h2>
+              <p>
+                Repositorio geoespacial oficial para la descarga de capas Shapefile (.shp),
+                visualización satelital de alta resolución y análisis de concesiones forestales en Loreto, Perú.
+              </p>
+            </div>
+          </div>
+
+          <div className="catalog-hero-highlights">
+            <div className="hero-hl-item">
+              <span className="hero-hl-num">394k+</span>
+              <span className="hero-hl-txt">Hectáreas en Manejo</span>
+            </div>
+            <div className="hero-hl-divider"></div>
+            <div className="hero-hl-item">
+              <span className="hero-hl-num">WGS 84</span>
+              <span className="hero-hl-txt">UTM Zona 18S</span>
+            </div>
+            <div className="hero-hl-divider"></div>
+            <div className="hero-hl-item">
+              <span className="hero-hl-num">100%</span>
+              <span className="hero-hl-txt">Shapefile Oficial</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Search and Filters Header */}
       <div className="section-header">
         <div className="section-header-title">

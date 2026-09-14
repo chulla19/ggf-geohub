@@ -81,12 +81,22 @@ export default function App() {
       {/* Top Navbar */}
       <header className="navbar">
         <div className="brand" onClick={() => setActiveTab('catalog')}>
-          <div className="brand-icon-wrapper">
-            <Trees size={24} />
+          <div className="brand-logo-container">
+            <img
+              src="/logos/ggf-logo-orange.png"
+              alt="Green Gold Forestry"
+              className="brand-logo-img"
+              onError={e => {
+                e.currentTarget.src = '/logos/Logotipo_-_Naranja-SINFONDO.png';
+              }}
+            />
           </div>
           <div className="brand-title-group">
-            <h1>GGF GeoHub</h1>
-            <p>Green Gold Forestry &bull; Loreto, Perú</p>
+            <div className="brand-title-row">
+              <h1>GeoHub</h1>
+              <span className="brand-badge-pill">SIG Loreto</span>
+            </div>
+            <p>Green Gold Forestry &bull; Perú</p>
           </div>
         </div>
 
@@ -105,7 +115,7 @@ export default function App() {
             onClick={() => setActiveTab('map')}
           >
             <MapIcon size={16} />
-            <span>Visor de Mapa Satelital</span>
+            <span>Visor Satelital GGF</span>
           </button>
 
           <button
@@ -125,9 +135,9 @@ export default function App() {
               <span>Subir Shapefile (Admin)</span>
             </button>
           ) : (
-            <div className="read-only-badge" title="Portal público oficial de Green Gold Forestry en modo de solo descarga">
+            <div className="read-only-badge" title="Portal público oficial de Green Gold Forestry">
               <ShieldCheck size={16} color="var(--primary-light)" />
-              <span>Descargas Oficiales GGF</span>
+              <span>Repositorio Oficial GGF</span>
             </div>
           )}
         </div>
@@ -137,7 +147,7 @@ export default function App() {
       <section className="stats-banner">
         <div className="stats-group">
           <div className="stat-item">
-            <div className="stat-icon emerald">
+            <div className="stat-icon ggf-forest">
               <Globe size={20} />
             </div>
             <div className="stat-text">
@@ -147,17 +157,17 @@ export default function App() {
           </div>
 
           <div className="stat-item">
-            <div className="stat-icon cyan">
+            <div className="stat-icon ggf-orange">
               <Layers size={20} />
             </div>
             <div className="stat-text">
               <div className="value">{layers.length} Capas</div>
-              <div className="label">En Repositorio</div>
+              <div className="label">En Repositorio SIG</div>
             </div>
           </div>
 
           <div className="stat-item">
-            <div className="stat-icon amber">
+            <div className="stat-icon ggf-gold">
               <HardDrive size={20} />
             </div>
             <div className="stat-text">
@@ -167,7 +177,7 @@ export default function App() {
           </div>
 
           <div className="stat-item">
-            <div className="stat-icon purple">
+            <div className="stat-icon ggf-lime">
               <Compass size={20} />
             </div>
             <div className="stat-text">
@@ -178,8 +188,8 @@ export default function App() {
         </div>
 
         <div className="share-quick-hint">
-          <Share2 size={15} color="var(--primary-light)" />
-          <span>Comparte enlaces de descarga directa sin enviar archivos pesados</span>
+          <Share2 size={15} color="var(--ggf-orange)" />
+          <span>Enlaces directos Shapefile &bull; Descarga sin intermediarios</span>
         </div>
       </section>
 
@@ -218,6 +228,43 @@ export default function App() {
           </>
         )}
       </main>
+
+      {/* Corporate Footer */}
+      <footer className="corporate-footer">
+        <div className="footer-content">
+          <div className="footer-brand-col">
+            <div className="footer-logo-row">
+              <img
+                src="/logos/ggf-logo-white.png"
+                alt="GGF Group"
+                className="footer-logo-img"
+                onError={e => {
+                  e.currentTarget.src = '/logos/ggf-logo-orange.png';
+                }}
+              />
+              <div>
+                <h4>Green Gold Forestry</h4>
+                <p>Manejo Forestal Sostenible &bull; Loreto, Perú</p>
+              </div>
+            </div>
+            <p className="footer-description">
+              Plataforma geoespacial y de catalogación territorial oficial de Green Gold Forestry S.A.C.
+              Gestión de concesiones forestales, zonificación y proyectos de conservación en la Amazonía Peruana.
+            </p>
+          </div>
+
+          <div className="footer-meta-col">
+            <div className="footer-pill-group">
+              <span className="footer-pill">📍 Loreto &bull; Amazonía Peruana</span>
+              <span className="footer-pill">🌐 EPSG: 32718 (UTM 18S)</span>
+              <span className="footer-pill">🌲 394,880+ Hectáreas Protegidas</span>
+            </div>
+            <p className="footer-copy">
+              &copy; {new Date().getFullYear()} Green Gold Forestry (GGF Group). Todos los derechos reservados.
+            </p>
+          </div>
+        </div>
+      </footer>
 
       {/* Upload Modal (Admin only) */}
       {isAdmin && (
