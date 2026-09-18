@@ -93,13 +93,13 @@ const BASEMAP_URLS = {
   }
 };
 
-// Official GGF Layer Colors (GGL1: Verde #22C55E, GGL2: Naranja Claro #FB923C, Concesiones: Naranja GGF #C27107, Campamentos: Rojo #EF4444)
+// Official GGF Layer Colors (GGL1: Amarillo Intenso #FFD700, GGL2: Celeste/Cyan #0EA5E9, Concesiones: Naranja #FF6B00, Campamentos: Rojo #EF4444)
 const OFFICIAL_LAYER_COLORS = {
-  'Conseciones_unidos': '#C27107',                   // Naranja Oficial GGF
-  'Proyecto_GGL1': '#22C55E',                        // Verde Proyecto GGL1
-  'Area_Proyecto_Oct2022': '#22C55E',               // Verde Proyecto GGL1 (legacy)
-  'Proyecto_GGL2': '#FB923C',                        // Naranja Claro Proyecto GGL2
-  'Area_Proyecto_GGL2_SinB10K120925': '#FB923C',    // Naranja Claro Proyecto GGL2 (legacy)
+  'Conseciones_unidos': '#FF6B00',                   // Naranja Vivo Concesiones GGF
+  'Proyecto_GGL1': '#FFD700',                        // Amarillo Intenso Proyecto GGL1
+  'Area_Proyecto_Oct2022': '#FFD700',               // Amarillo Intenso Proyecto GGL1 (legacy)
+  'Proyecto_GGL2': '#0EA5E9',                        // Azul/Cyan Proyecto GGL2
+  'Area_Proyecto_GGL2_SinB10K120925': '#0EA5E9',    // Azul/Cyan Proyecto GGL2 (legacy)
   'CampamentosGGF': '#EF4444'                       // Rojo Campamentos
 };
 
@@ -123,11 +123,11 @@ export default function MapViewer({ layers, initialFocusLayerId }) {
   const [activeBasemap, setActiveBasemap] = useState('satellite');
   const [layerVisibility, setLayerVisibility] = useState({});
   const [layerOpacities, setLayerOpacities] = useState({
-    Conseciones_unidos: 0.45,
-    Proyecto_GGL1: 0.35,
-    Proyecto_GGL2: 0.35,
-    Area_Proyecto_Oct2022: 0.35,
-    Area_Proyecto_GGL2_SinB10K120925: 0.35,
+    Conseciones_unidos: 0.35,
+    Proyecto_GGL1: 0.55,
+    Proyecto_GGL2: 0.50,
+    Area_Proyecto_Oct2022: 0.55,
+    Area_Proyecto_GGL2_SinB10K120925: 0.50,
     CampamentosGGF: 1.0
   });
   const [soloLayerId, setSoloLayerId] = useState(null);
@@ -215,7 +215,7 @@ export default function MapViewer({ layers, initialFocusLayerId }) {
 
   // Determine feature color (Official GGF Colors)
   const getFeatureColor = useCallback((feature, layerId) => {
-    return OFFICIAL_LAYER_COLORS[layerId] || '#C27107';
+    return OFFICIAL_LAYER_COLORS[layerId] || '#F97316';
   }, []);
 
   // Red Pulsing Radar Icon for Camps
@@ -400,16 +400,17 @@ export default function MapViewer({ layers, initialFocusLayerId }) {
                 color: col,
                 fillColor: col,
                 fillOpacity: layerOpacity,
-                opacity: 0.9,
-                weight: 2
+                opacity: 1,
+                weight: (layer.id === 'Proyecto_GGL1' || layer.id === 'Area_Proyecto_Oct2022') ? 3 : 2
               });
             }
           });
 
-          // Ensure camps remain on top of polygons
-          if (layer.id === 'CampamentosGGF' && leafletLayer.bringToFront) {
-            leafletLayer.bringToFront();
-          }
+          // Maintain proper layer stacking order: Concesiones bottom, GGL1/GGL2 middle, Camps top
+          if (geojsonLayersRef.current['Proyecto_GGL1']) geojsonLayersRef.current['Proyecto_GGL1'].bringToFront();
+          if (geojsonLayersRef.current['Area_Proyecto_Oct2022']) geojsonLayersRef.current['Area_Proyecto_Oct2022'].bringToFront();
+          if (geojsonLayersRef.current['Proyecto_GGL2']) geojsonLayersRef.current['Proyecto_GGL2'].bringToFront();
+          if (geojsonLayersRef.current['CampamentosGGF']) geojsonLayersRef.current['CampamentosGGF'].bringToFront();
         }
         return;
       }
@@ -447,8 +448,8 @@ export default function MapViewer({ layers, initialFocusLayerId }) {
                 const col = getFeatureColor(feature, layer.id);
                 return {
                   color: col,
-                  weight: 2,
-                  opacity: 0.9,
+                  weight: (layer.id === 'Proyecto_GGL1' || layer.id === 'Area_Proyecto_Oct2022') ? 3 : 2,
+                  opacity: 1,
                   fillColor: col,
                   fillOpacity: layerOpacity
                 };
@@ -493,7 +494,7 @@ export default function MapViewer({ layers, initialFocusLayerId }) {
                   if (l.setStyle && feature.geometry.type !== 'Point') {
                     const col = getFeatureColor(feature, layer.id);
                     l.setStyle({
-                      weight: 2,
+                      weight: (layer.id === 'Proyecto_GGL1' || layer.id === 'Area_Proyecto_Oct2022') ? 3 : 2,
                       color: col,
                       fillColor: col,
                       fillOpacity: layerOpacity
@@ -519,10 +520,11 @@ export default function MapViewer({ layers, initialFocusLayerId }) {
             geojsonLayersRef.current[layer.id] = leafletGeoJson;
             map.addLayer(leafletGeoJson);
 
-            // Keep camp markers on top
-            if (layer.id === 'CampamentosGGF') {
-              leafletGeoJson.bringToFront();
-            }
+            // Layer stacking order: Concesiones in back, GGL1/GGL2 on top, camps at very top
+            if (geojsonLayersRef.current['Proyecto_GGL1']) geojsonLayersRef.current['Proyecto_GGL1'].bringToFront();
+            if (geojsonLayersRef.current['Area_Proyecto_Oct2022']) geojsonLayersRef.current['Area_Proyecto_Oct2022'].bringToFront();
+            if (geojsonLayersRef.current['Proyecto_GGL2']) geojsonLayersRef.current['Proyecto_GGL2'].bringToFront();
+            if (geojsonLayersRef.current['CampamentosGGF']) geojsonLayersRef.current['CampamentosGGF'].bringToFront();
 
             // Auto-frame all loaded layers or specific focused layer
             try {
@@ -1483,15 +1485,15 @@ Situación: ${p.SITUA_OPER || 'Activa'}
           {isLegendOpen && (
             <div style={{ marginTop: '0.35rem' }}>
               <div className="gis-legend-item">
-                <div className="gis-legend-swatch" style={{ background: '#C27107' }} />
+                <div className="gis-legend-swatch" style={{ background: '#FF6B00' }} />
                 <span>Concesiones GGF</span>
               </div>
               <div className="gis-legend-item">
-                <div className="gis-legend-swatch" style={{ background: '#22C55E' }} />
+                <div className="gis-legend-swatch" style={{ background: '#FFD700' }} />
                 <span>Proyecto GGL1</span>
               </div>
               <div className="gis-legend-item">
-                <div className="gis-legend-swatch" style={{ background: '#FB923C' }} />
+                <div className="gis-legend-swatch" style={{ background: '#0EA5E9' }} />
                 <span>Proyecto GGL2</span>
               </div>
               <div className="gis-legend-item">
