@@ -73,7 +73,7 @@
       "project": "Proyecto GGL1",
       "category": "Límites & Cobertura",
       "description": "Área del Proyecto GGL1 y cobertura vegetal con zonificación de bosque alto y fisiografía.",
-      "color": "#FFD700",
+      "color": "#22C55E",
       "tags": [
         "Proyecto GGL1",
         "Cobertura Vegetal",
@@ -105,7 +105,7 @@
       "project": "Proyecto GGL2",
       "category": "Límites de Proyecto",
       "description": "Área neta elegible del Proyecto GGL2 (Loreto 2) con exclusión de zona de amortiguamiento de 10 km / comunidades nativas.",
-      "color": "#0EA5E9",
+      "color": "#FFD700",
       "tags": [
         "Proyecto GGL2",
         "Área Neta",

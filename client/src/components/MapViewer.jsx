@@ -93,13 +93,13 @@ const BASEMAP_URLS = {
   }
 };
 
-// Official GGF Layer Colors (GGL1: Amarillo Intenso #FFD700, GGL2: Celeste/Cyan #0EA5E9, Concesiones: Naranja #FF6B00, Campamentos: Rojo #EF4444)
+// Official GGF Layer Colors (GGL1: Verde #22C55E, GGL2: Amarillo #FFD700, Concesiones: Naranja #FF6B00, Campamentos: Rojo #EF4444)
 const OFFICIAL_LAYER_COLORS = {
-  'Conseciones_unidos': '#FF6B00',                   // Naranja Vivo Concesiones GGF
-  'Proyecto_GGL1': '#FFD700',                        // Amarillo Intenso Proyecto GGL1
-  'Area_Proyecto_Oct2022': '#FFD700',               // Amarillo Intenso Proyecto GGL1 (legacy)
-  'Proyecto_GGL2': '#0EA5E9',                        // Azul/Cyan Proyecto GGL2
-  'Area_Proyecto_GGL2_SinB10K120925': '#0EA5E9',    // Azul/Cyan Proyecto GGL2 (legacy)
+  'Conseciones_unidos': '#FF6B00',                   // Naranja Concesiones GGF
+  'Proyecto_GGL1': '#22C55E',                        // Verde Proyecto GGL1
+  'Area_Proyecto_Oct2022': '#22C55E',               // Verde Proyecto GGL1 (legacy)
+  'Proyecto_GGL2': '#FFD700',                        // Amarillo Proyecto GGL2
+  'Area_Proyecto_GGL2_SinB10K120925': '#FFD700',    // Amarillo Proyecto GGL2 (legacy)
   'CampamentosGGF': '#EF4444'                       // Rojo Campamentos
 };
 
@@ -1489,11 +1489,11 @@ Situación: ${p.SITUA_OPER || 'Activa'}
                 <span>Concesiones GGF</span>
               </div>
               <div className="gis-legend-item">
-                <div className="gis-legend-swatch" style={{ background: '#FFD700' }} />
+                <div className="gis-legend-swatch" style={{ background: '#22C55E' }} />
                 <span>Proyecto GGL1</span>
               </div>
               <div className="gis-legend-item">
-                <div className="gis-legend-swatch" style={{ background: '#0EA5E9' }} />
+                <div className="gis-legend-swatch" style={{ background: '#FFD700' }} />
                 <span>Proyecto GGL2</span>
               </div>
               <div className="gis-legend-item">

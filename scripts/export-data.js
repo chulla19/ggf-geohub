@@ -24,7 +24,7 @@ const LAYER_CONFIG = {
     project: 'Concesiones GGF',
     category: 'Concesiones',
     description: 'Delimitación oficial de 15 concesiones forestales adjudicadas y asociadas a Green Gold Forestry.',
-    color: '#F97316',
+    color: '#FF6B00',
     tags: ['Concesiones GGF', 'Forestal', 'Carbono', 'Loreto 1 & 2']
   },
   'Proyecto_GGL1': {
@@ -32,7 +32,7 @@ const LAYER_CONFIG = {
     project: 'Proyecto GGL1',
     category: 'Límites & Cobertura',
     description: 'Área del Proyecto GGL1 y cobertura vegetal con zonificación de bosque alto y fisiografía.',
-    color: '#EAB308',
+    color: '#22C55E',
     tags: ['Proyecto GGL1', 'Cobertura Vegetal', 'Fisiografía', 'Loreto 1']
   },
   'Area_Proyecto_Oct2022': {
@@ -40,7 +40,7 @@ const LAYER_CONFIG = {
     project: 'Proyecto GGL1',
     category: 'Límites & Cobertura',
     description: 'Área del Proyecto GGL1 y cobertura vegetal (Línea base Oct 2022) con zonificación de bosque alto y fisiografía.',
-    color: '#EAB308',
+    color: '#22C55E',
     tags: ['Proyecto GGL1', 'Cobertura Vegetal', 'Fisiografía', 'Oct 2022']
   },
   'Proyecto_GGL2': {
@@ -48,7 +48,7 @@ const LAYER_CONFIG = {
     project: 'Proyecto GGL2',
     category: 'Límites de Proyecto',
     description: 'Área neta elegible del Proyecto GGL2 (Loreto 2) con exclusión de zona de amortiguamiento de 10 km / comunidades nativas.',
-    color: '#0EA5E9',
+    color: '#FFD700',
     tags: ['Proyecto GGL2', 'Área Neta', 'Loreto 2']
   },
   'Area_Proyecto_GGL2_SinB10K120925': {
@@ -56,7 +56,7 @@ const LAYER_CONFIG = {
     project: 'Proyecto GGL2',
     category: 'Límites de Proyecto',
     description: 'Área neta elegible del Proyecto GGL2 (Loreto 2) con exclusión de zona de amortiguamiento de 10 km / comunidades nativas.',
-    color: '#0EA5E9',
+    color: '#FFD700',
     tags: ['Proyecto GGL2', 'Área Neta', 'Buffer 10K', 'Loreto 2']
   },
   'CampamentosGGF': {
