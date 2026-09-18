@@ -27,6 +27,14 @@ const LAYER_CONFIG = {
     color: '#C27107',
     tags: ['Concesiones GGF', 'Forestal', 'Carbono', 'Loreto 1 & 2']
   },
+  'Proyecto_GGL1': {
+    name: 'Proyecto GGL1',
+    project: 'Proyecto GGL1',
+    category: 'Límites & Cobertura',
+    description: 'Área del Proyecto GGL1 y cobertura vegetal con zonificación de bosque alto y fisiografía.',
+    color: '#22C55E',
+    tags: ['Proyecto GGL1', 'Cobertura Vegetal', 'Fisiografía', 'Loreto 1']
+  },
   'Area_Proyecto_Oct2022': {
     name: 'Proyecto GGL1',
     project: 'Proyecto GGL1',
@@ -34,6 +42,14 @@ const LAYER_CONFIG = {
     description: 'Área del Proyecto GGL1 y cobertura vegetal (Línea base Oct 2022) con zonificación de bosque alto y fisiografía.',
     color: '#22C55E',
     tags: ['Proyecto GGL1', 'Cobertura Vegetal', 'Fisiografía', 'Oct 2022']
+  },
+  'Proyecto_GGL2': {
+    name: 'Proyecto GGL2',
+    project: 'Proyecto GGL2',
+    category: 'Límites de Proyecto',
+    description: 'Área neta elegible del Proyecto GGL2 (Loreto 2) con exclusión de zona de amortiguamiento de 10 km / comunidades nativas.',
+    color: '#FB923C',
+    tags: ['Proyecto GGL2', 'Área Neta', 'Loreto 2']
   },
   'Area_Proyecto_GGL2_SinB10K120925': {
     name: 'Proyecto GGL2',
@@ -140,6 +156,23 @@ async function exportAll() {
       totalHectares: totalHa > 0 ? Number(totalHa.toFixed(2)) : null
     });
   }
+
+  // Clean up orphaned static files
+  const activeIds = new Set(layersList.map(l => l.id));
+  [GEOJSON_DIR, RECORDS_DIR, DOWNLOADS_DIR].forEach(dir => {
+    if (fs.existsSync(dir)) {
+      const files = fs.readdirSync(dir);
+      files.forEach(file => {
+        const baseName = file.replace(/(_SHP\.zip|_atributos\.csv|\.json|\.geojson)$/i, '');
+        if (!activeIds.has(baseName)) {
+          try {
+            fs.unlinkSync(path.join(dir, file));
+            console.log(`🧹 Cleaned obsolete asset: ${file}`);
+          } catch (e) {}
+        }
+      });
+    }
+  });
 
   // Save layers metadata
   fs.writeFileSync(

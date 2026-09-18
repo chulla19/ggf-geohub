@@ -4,28 +4,11 @@
     {
       "type": "Feature",
       "properties": {
-        "OBJECTID": 1,
-        "NOTA": null,
-        "SITUA_OPER": null,
         "HA": 16866.0698679,
         "CONTRATO_1": "16-LOR-MAY/CON-MAD-2019-009   (Anexo 1)",
-        "REPRESEN_1": "Luis Angel Ascencio Jurado",
-        "TITULAR_1": "Inversiones la Oroza S.R.L",
-        "DISTRITO": "Napo, Mazan",
-        "OBSERVAC_2": "Consolido UUAA 1172 Y 1194",
-        "MODALIDAD": "Abreviado 2019",
-        "ODP": "Maynas",
-        "SITUA_CONT": null,
-        "N_Orden": "3",
-        "ZONA": "Tacsha",
         "comprado": "Oroza",
         "py_carbono": "Loreto 2",
-        "nombre": "Tacsha 10",
-        "consolidad": "16-LOR-MAY/COM-MAD-2019-009",
-        "Alias": "Oroza 1 Anexo 1",
-        "ha_1": 16866.07,
-        "CentroiX": null,
-        "CentroiY": null
+        "nombre": "Tacsha 10"
       },
       "geometry": {
         "type": "Polygon",
@@ -498,28 +481,11 @@
     {
       "type": "Feature",
       "properties": {
-        "OBJECTID": 2,
-        "NOTA": null,
-        "SITUA_OPER": null,
         "HA": 35561.8841976,
         "CONTRATO_1": "16-LOR-MAY/CON-MAD-2019-009   (Anexo 2)",
-        "REPRESEN_1": "Luis Angel Ascencio Jurado",
-        "TITULAR_1": "Inversiones la Oroza S.R.L",
-        "DISTRITO": "Napo, Mazan",
-        "OBSERVAC_2": "Consolido UUAA 133,228,229,230,1169,1170",
-        "MODALIDAD": "Abreviado 2019",
-        "ODP": "Maynas",
-        "SITUA_CONT": null,
-        "N_Orden": "9",
-        "ZONA": "Tacsha",
         "comprado": "Oroza",
         "py_carbono": "Loreto 2",
-        "nombre": "Tacsha 10",
-        "consolidad": "16-LOR-MAY/COM-MAD-2019-009",
-        "Alias": "Oroza 1 Anexo 2",
-        "ha_1": 35561.88,
-        "CentroiX": null,
-        "CentroiY": null
+        "nombre": "Tacsha 10"
       },
       "geometry": {
         "type": "Polygon",
@@ -1232,28 +1198,11 @@
     {
       "type": "Feature",
       "properties": {
-        "OBJECTID": 3,
-        "NOTA": null,
-        "SITUA_OPER": "No activa",
         "HA": 30199.6950897,
         "CONTRATO_1": "16-IQU/C-J-238-04",
-        "REPRESEN_1": "Zoraida Valdez de Perez",
-        "TITULAR_1": "Aserradero Netrmac SAC",
-        "DISTRITO": "Napo",
-        "OBSERVAC_2": null,
-        "MODALIDAD": "Concurso Publico",
-        "ODP": "Maynas",
-        "SITUA_CONT": "Vigente",
-        "N_Orden": null,
-        "ZONA": "Tacsha",
         "comprado": "Netrimac",
         "py_carbono": "Loreto 2",
-        "nombre": "Tacsha 13",
-        "consolidad": "Consolidado 4",
-        "Alias": "Netrimac",
-        "ha_1": 30199.7,
-        "CentroiX": null,
-        "CentroiY": null
+        "nombre": "Tacsha 13"
       },
       "geometry": {
         "type": "Polygon",
@@ -3550,28 +3499,11 @@
     {
       "type": "Feature",
       "properties": {
-        "OBJECTID": 5,
-        "NOTA": null,
-        "SITUA_OPER": "No activa",
         "HA": 57339.2785836,
         "CONTRATO_1": "16-IQU/D-C-001-12",
-        "REPRESEN_1": "Garet Hughes",
-        "TITULAR_1": "Green Gold Forestry Peru SAC",
-        "DISTRITO": "Napo, Mazan",
-        "OBSERVAC_2": null,
-        "MODALIDAD": "Concurso Publico",
-        "ODP": "Maynas",
-        "SITUA_CONT": "Vigente",
-        "N_Orden": null,
-        "ZONA": "Tacsha",
         "comprado": "Consorcio GGF Group",
         "py_carbono": "Loreto 1",
-        "nombre": "Tacsha 2",
-        "consolidad": "Consolidado 1 Tacsha",
-        "Alias": null,
-        "ha_1": 57339.28,
-        "CentroiX": null,
-        "CentroiY": null
+        "nombre": "Tacsha 2"
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -6056,28 +5988,11 @@
     {
       "type": "Feature",
       "properties": {
-        "OBJECTID": 6,
-        "NOTA": null,
-        "SITUA_OPER": "Activa",
         "HA": 51697.0782936,
         "CONTRATO_1": "16-IQU/C-J-170-04",
-        "REPRESEN_1": null,
-        "TITULAR_1": null,
-        "DISTRITO": null,
-        "OBSERVAC_2": null,
-        "MODALIDAD": null,
-        "ODP": null,
-        "SITUA_CONT": null,
-        "N_Orden": null,
-        "ZONA": "Tacsha",
         "comprado": "Consorcio GGF Group",
         "py_carbono": "Loreto 1",
-        "nombre": "Tacsha 1",
-        "consolidad": "Consolidado 1 Tacsha",
-        "Alias": null,
-        "ha_1": 51697.08,
-        "CentroiX": null,
-        "CentroiY": null
+        "nombre": "Tacsha 1"
       },
       "geometry": {
         "type": "Polygon",
@@ -7410,28 +7325,11 @@
     {
       "type": "Feature",
       "properties": {
-        "OBJECTID": 8,
-        "NOTA": null,
-        "SITUA_OPER": "No Activa",
         "HA": 30010.4819812,
         "CONTRATO_1": "16-LOR-MAY/CON-MAD-2018-005",
-        "REPRESEN_1": "Gareth Hughes",
-        "TITULAR_1": "Consorcio GGF Group",
-        "DISTRITO": "Mazan",
-        "OBSERVAC_2": null,
-        "MODALIDAD": "Abreviado",
-        "ODP": "Maynas",
-        "SITUA_CONT": "Vigente",
-        "N_Orden": null,
-        "ZONA": "Tacsha",
         "comprado": "Consorcio GGF Group",
         "py_carbono": "Loreto 1",
-        "nombre": "Tacsha 9",
-        "consolidad": "Consolidado 2 Mazan",
-        "Alias": null,
-        "ha_1": 30010.48,
-        "CentroiX": null,
-        "CentroiY": null
+        "nombre": "Tacsha 9"
       },
       "geometry": {
         "type": "Polygon",
@@ -9680,28 +9578,11 @@
     {
       "type": "Feature",
       "properties": {
-        "OBJECTID": 9,
-        "NOTA": null,
-        "SITUA_OPER": "No Activa",
         "HA": 46418.1288205,
         "CONTRATO_1": "16-LOR-MAY/CON-MAD-2018-006",
-        "REPRESEN_1": "Gareth Hughes",
-        "TITULAR_1": "Consorcio GGF Group",
-        "DISTRITO": "Mazan",
-        "OBSERVAC_2": null,
-        "MODALIDAD": "Abreviado",
-        "ODP": "Maynas",
-        "SITUA_CONT": "Vigente",
-        "N_Orden": null,
-        "ZONA": "Tacsha",
         "comprado": "Consorcio GGF Group",
         "py_carbono": "Loreto 1",
-        "nombre": "Tacsha 6",
-        "consolidad": "Consolidado 1 Tacsha",
-        "Alias": null,
-        "ha_1": 46418.13,
-        "CentroiX": null,
-        "CentroiY": null
+        "nombre": "Tacsha 6"
       },
       "geometry": {
         "type": "Polygon",
@@ -10766,28 +10647,11 @@
     {
       "type": "Feature",
       "properties": {
-        "OBJECTID": 14,
-        "NOTA": null,
-        "SITUA_OPER": "No activa",
         "HA": 5308.05885937,
         "CONTRATO_1": "16-IQU/C-J-171-04",
-        "REPRESEN_1": "Milka Robalino Rocha",
-        "TITULAR_1": "Forestal Ecologicos del Mazan",
-        "DISTRITO": "Mazan",
-        "OBSERVAC_2": null,
-        "MODALIDAD": "Concurso Publico",
-        "ODP": "Maynas",
-        "SITUA_CONT": "Vigente",
-        "N_Orden": null,
-        "ZONA": "Tacsha",
         "comprado": "Consorcio GGF Group",
         "py_carbono": "Loreto 1",
-        "nombre": "Tacsha 3",
-        "consolidad": "Consolidado 1 Tacsha",
-        "Alias": null,
-        "ha_1": 5308.06,
-        "CentroiX": null,
-        "CentroiY": null
+        "nombre": "Tacsha 3"
       },
       "geometry": {
         "type": "Polygon",
@@ -11204,28 +11068,11 @@
     {
       "type": "Feature",
       "properties": {
-        "OBJECTID": 17,
-        "NOTA": "Superpuesta con Comunidad nativa",
-        "SITUA_OPER": "No Activa",
         "HA": 4630.19918741,
         "CONTRATO_1": "16-LOR-MAY/CON-MAD-2018-010",
-        "REPRESEN_1": "Gareth Hughes",
-        "TITULAR_1": "Consorcio GGF Group",
-        "DISTRITO": "Napo",
-        "OBSERVAC_2": null,
-        "MODALIDAD": "Abreviado",
-        "ODP": "Maynas",
-        "SITUA_CONT": "Vigente",
-        "N_Orden": null,
-        "ZONA": "Tacsha",
         "comprado": "Consorcio GGF Group",
         "py_carbono": "Loreto 2",
-        "nombre": "Tacsha 4",
-        "consolidad": "Tacsha 4",
-        "Alias": "Tacsha 4",
-        "ha_1": 4630.2,
-        "CentroiX": null,
-        "CentroiY": null
+        "nombre": "Tacsha 4"
       },
       "geometry": {
         "type": "Polygon",
@@ -11282,28 +11129,11 @@
     {
       "type": "Feature",
       "properties": {
-        "OBJECTID": 20,
-        "NOTA": null,
-        "SITUA_OPER": "No Activa",
         "HA": 6789.6133375,
         "CONTRATO_1": "16-LOR-MAY/CON-MAD-2018-008",
-        "REPRESEN_1": "Gareth Hughes",
-        "TITULAR_1": "Consorcio GGF Group",
-        "DISTRITO": "Mazan y Napo",
-        "OBSERVAC_2": null,
-        "MODALIDAD": "Abreviado",
-        "ODP": "Maynas",
-        "SITUA_CONT": "Vigente",
-        "N_Orden": null,
-        "ZONA": "Tacsha",
         "comprado": "Consorcio GGF Group",
         "py_carbono": "Loreto 1",
-        "nombre": "Tacsha 8",
-        "consolidad": "Consolidado 2 Mazan",
-        "Alias": null,
-        "ha_1": 6789.61,
-        "CentroiX": null,
-        "CentroiY": null
+        "nombre": "Tacsha 8"
       },
       "geometry": {
         "type": "Polygon",
@@ -11732,28 +11562,11 @@
     {
       "type": "Feature",
       "properties": {
-        "OBJECTID": 21,
-        "NOTA": null,
-        "SITUA_OPER": "No Activa",
         "HA": 9548.14320087,
         "CONTRATO_1": "16-LOR-MAY/CON-MAD-2018-009",
-        "REPRESEN_1": "Gareth Hughes",
-        "TITULAR_1": "Consorcio GGF Group",
-        "DISTRITO": "Napo",
-        "OBSERVAC_2": null,
-        "MODALIDAD": "Abreviado",
-        "ODP": "Maynas",
-        "SITUA_CONT": "Vigente",
-        "N_Orden": null,
-        "ZONA": "Tacsha",
         "comprado": "Consorcio GGF Group",
         "py_carbono": "Loreto 1",
-        "nombre": "Tacsha 7",
-        "consolidad": "Consolidado 1 Tacsha",
-        "Alias": null,
-        "ha_1": 9548.14,
-        "CentroiX": null,
-        "CentroiY": null
+        "nombre": "Tacsha 7"
       },
       "geometry": {
         "type": "Polygon",
@@ -12098,28 +11911,11 @@
     {
       "type": "Feature",
       "properties": {
-        "OBJECTID": 22,
-        "NOTA": null,
-        "SITUA_OPER": "No activa",
         "HA": 29125.120376,
         "CONTRATO_1": "16-IQU/C-J-099-04",
-        "REPRESEN_1": "Adolfo Benjamin Reategui Guerra",
-        "TITULAR_1": "Empresa Forestal San Regis",
-        "DISTRITO": "Nauta",
-        "OBSERVAC_2": null,
-        "MODALIDAD": "Concurso Publico",
-        "ODP": "Loreto",
-        "SITUA_CONT": "Vigente",
-        "N_Orden": null,
-        "ZONA": "San Regis",
         "comprado": "Consorcio GGF Group",
         "py_carbono": "Loreto 1",
-        "nombre": "San Regis",
-        "consolidad": "Forestal San Regis",
-        "Alias": null,
-        "ha_1": 29125.12,
-        "CentroiX": "73° 56' 0.161\" W",
-        "CentroiY": "4° 21' 15.482\" S"
+        "nombre": "San Regis"
       },
       "geometry": {
         "type": "Polygon",
@@ -12388,28 +12184,11 @@
     {
       "type": "Feature",
       "properties": {
-        "OBJECTID": 0,
-        "NOTA": null,
-        "SITUA_OPER": null,
         "HA": 11366.7340333,
         "CONTRATO_1": "16-LOR-MAY/CON-MAD-2021-018",
-        "REPRESEN_1": null,
-        "TITULAR_1": "GAYA AMAZONICA",
-        "DISTRITO": null,
-        "OBSERVAC_2": null,
-        "MODALIDAD": null,
-        "ODP": null,
-        "SITUA_CONT": null,
-        "N_Orden": null,
-        "ZONA": null,
         "comprado": "Oroza",
         "py_carbono": "Loreto 2",
-        "nombre": "Tacsha 12",
-        "consolidad": "16-LOR-MAY/COM-MAD-2021-021",
-        "Alias": "Gaya",
-        "ha_1": 11366.73,
-        "CentroiX": null,
-        "CentroiY": null
+        "nombre": "Tacsha 12"
       },
       "geometry": {
         "type": "Polygon",
@@ -12960,28 +12739,11 @@
     {
       "type": "Feature",
       "properties": {
-        "OBJECTID": 0,
-        "NOTA": null,
-        "SITUA_OPER": null,
         "HA": 47952.1759503,
         "CONTRATO_1": "16-LOR-MAY/CON-MAD-2017-024",
-        "REPRESEN_1": null,
-        "TITULAR_1": "GAYA AMAZONICA",
-        "DISTRITO": null,
-        "OBSERVAC_2": null,
-        "MODALIDAD": null,
-        "ODP": null,
-        "SITUA_CONT": null,
-        "N_Orden": null,
-        "ZONA": null,
         "comprado": "Oroza",
         "py_carbono": "Loreto 2",
-        "nombre": "Tacsha 11",
-        "consolidad": "Consolidado 5",
-        "Alias": "Oroza 2",
-        "ha_1": 47947.79,
-        "CentroiX": null,
-        "CentroiY": null
+        "nombre": "Tacsha 11"
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -14164,28 +13926,11 @@
     {
       "type": "Feature",
       "properties": {
-        "OBJECTID": 0,
-        "NOTA": null,
-        "SITUA_OPER": null,
         "HA": 12067.3681276,
         "CONTRATO_1": "16-LOR-MAY/CON-MAD-2018-007",
-        "REPRESEN_1": null,
-        "TITULAR_1": null,
-        "DISTRITO": null,
-        "OBSERVAC_2": null,
-        "MODALIDAD": null,
-        "ODP": null,
-        "SITUA_CONT": null,
-        "N_Orden": null,
-        "ZONA": "Tacsha",
         "comprado": "Consorcio GGF Group",
         "py_carbono": "Loreto 2",
-        "nombre": "Tacsha 5",
-        "consolidad": "Compensación",
-        "Alias": "Compensación",
-        "ha_1": 12067.37,
-        "CentroiX": null,
-        "CentroiY": null
+        "nombre": "Tacsha 5"
       },
       "geometry": {
         "type": "Polygon",

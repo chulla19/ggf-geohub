@@ -3,70 +3,6 @@
   "count": 4,
   "layers": [
     {
-      "id": "Area_Proyecto_GGL2_SinB10K120925",
-      "rawName": "Area_Proyecto_GGL2_SinB10K120925",
-      "name": "Proyecto GGL2",
-      "project": "Proyecto GGL2",
-      "category": "Límites de Proyecto",
-      "description": "Área neta elegible del Proyecto GGL2 (Loreto 2) con exclusión de zona de amortiguamiento de 10 km / comunidades nativas.",
-      "color": "#FB923C",
-      "tags": [
-        "Proyecto GGL2",
-        "Área Neta",
-        "Buffer 10K",
-        "Loreto 2"
-      ],
-      "source": "base",
-      "hasDbf": true,
-      "hasPrj": true,
-      "files": [
-        "Area_Proyecto_GGL2_SinB10K120925.cpg",
-        "Area_Proyecto_GGL2_SinB10K120925.dbf",
-        "Area_Proyecto_GGL2_SinB10K120925.prj",
-        "Area_Proyecto_GGL2_SinB10K120925.sbn",
-        "Area_Proyecto_GGL2_SinB10K120925.sbx",
-        "Area_Proyecto_GGL2_SinB10K120925.shp",
-        "Area_Proyecto_GGL2_SinB10K120925.shx"
-      ],
-      "sizeBytes": 1821712,
-      "crs": "WGS 1984 UTM Zona 18S (EPSG: 32718)",
-      "recordsCount": 32,
-      "geometryType": "Polygon",
-      "totalHectares": 106575.87
-    },
-    {
-      "id": "Area_Proyecto_Oct2022",
-      "rawName": "Area_Proyecto_Oct2022",
-      "name": "Proyecto GGL1",
-      "project": "Proyecto GGL1",
-      "category": "Límites & Cobertura",
-      "description": "Área del Proyecto GGL1 y cobertura vegetal (Línea base Oct 2022) con zonificación de bosque alto y fisiografía.",
-      "color": "#22C55E",
-      "tags": [
-        "Proyecto GGL1",
-        "Cobertura Vegetal",
-        "Fisiografía",
-        "Oct 2022"
-      ],
-      "source": "base",
-      "hasDbf": true,
-      "hasPrj": true,
-      "files": [
-        "Area_Proyecto_Oct2022.cpg",
-        "Area_Proyecto_Oct2022.dbf",
-        "Area_Proyecto_Oct2022.prj",
-        "Area_Proyecto_Oct2022.sbn",
-        "Area_Proyecto_Oct2022.sbx",
-        "Area_Proyecto_Oct2022.shp",
-        "Area_Proyecto_Oct2022.shx"
-      ],
-      "sizeBytes": 432994,
-      "crs": "WGS 1984 UTM Zona 18S (EPSG: 32718)",
-      "recordsCount": 13,
-      "geometryType": "MultiPolygon, Polygon",
-      "totalHectares": 183445.53
-    },
-    {
       "id": "CampamentosGGF",
       "rawName": "CampamentosGGF",
       "name": "Campamentos GGF",
@@ -92,7 +28,7 @@
         "CampamentosGGF.shp",
         "CampamentosGGF.shx"
       ],
-      "sizeBytes": 1647,
+      "sizeBytes": 1465,
       "crs": "WGS 1984 UTM Zona 18S (EPSG: 32718)",
       "recordsCount": 3,
       "geometryType": "Point",
@@ -124,11 +60,74 @@
         "Conseciones_unidos.shp",
         "Conseciones_unidos.shx"
       ],
-      "sizeBytes": 74297,
+      "sizeBytes": 61708,
       "crs": "WGS 1984 UTM Zona 18S (EPSG: 32718)",
       "recordsCount": 15,
       "geometryType": "Polygon, MultiPolygon",
       "totalHectares": 394880.03
+    },
+    {
+      "id": "Proyecto_GGL1",
+      "rawName": "Proyecto_GGL1",
+      "name": "Proyecto GGL1",
+      "project": "Proyecto GGL1",
+      "category": "Límites & Cobertura",
+      "description": "Área del Proyecto GGL1 y cobertura vegetal con zonificación de bosque alto y fisiografía.",
+      "color": "#22C55E",
+      "tags": [
+        "Proyecto GGL1",
+        "Cobertura Vegetal",
+        "Fisiografía",
+        "Loreto 1"
+      ],
+      "source": "base",
+      "hasDbf": true,
+      "hasPrj": true,
+      "files": [
+        "Proyecto_GGL1.cpg",
+        "Proyecto_GGL1.dbf",
+        "Proyecto_GGL1.prj",
+        "Proyecto_GGL1.sbn",
+        "Proyecto_GGL1.sbx",
+        "Proyecto_GGL1.shp",
+        "Proyecto_GGL1.shx"
+      ],
+      "sizeBytes": 397904,
+      "crs": "WGS 1984 UTM Zona 18S (EPSG: 32718)",
+      "recordsCount": 13,
+      "geometryType": "Polygon, MultiPolygon",
+      "totalHectares": 177940.91
+    },
+    {
+      "id": "Proyecto_GGL2",
+      "rawName": "Proyecto_GGL2",
+      "name": "Proyecto GGL2",
+      "project": "Proyecto GGL2",
+      "category": "Límites de Proyecto",
+      "description": "Área neta elegible del Proyecto GGL2 (Loreto 2) con exclusión de zona de amortiguamiento de 10 km / comunidades nativas.",
+      "color": "#FB923C",
+      "tags": [
+        "Proyecto GGL2",
+        "Área Neta",
+        "Loreto 2"
+      ],
+      "source": "base",
+      "hasDbf": true,
+      "hasPrj": true,
+      "files": [
+        "Proyecto_GGL2.CPG",
+        "Proyecto_GGL2.dbf",
+        "Proyecto_GGL2.prj",
+        "Proyecto_GGL2.sbn",
+        "Proyecto_GGL2.sbx",
+        "Proyecto_GGL2.shp",
+        "Proyecto_GGL2.shx"
+      ],
+      "sizeBytes": 1821712,
+      "crs": "WGS 1984 UTM Zona 18S (EPSG: 32718)",
+      "recordsCount": 32,
+      "geometryType": "Polygon",
+      "totalHectares": 106575.87
     }
   ]
 }

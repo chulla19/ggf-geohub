@@ -96,16 +96,18 @@ const BASEMAP_URLS = {
 // Official GGF Layer Colors (GGL1: Verde #22C55E, GGL2: Naranja Claro #FB923C, Concesiones: Naranja GGF #C27107, Campamentos: Rojo #EF4444)
 const OFFICIAL_LAYER_COLORS = {
   'Conseciones_unidos': '#C27107',                   // Naranja Oficial GGF
-  'Area_Proyecto_Oct2022': '#22C55E',               // Verde Proyecto GGL1
-  'Area_Proyecto_GGL2_SinB10K120925': '#FB923C',    // Naranja Claro Proyecto GGL2
+  'Proyecto_GGL1': '#22C55E',                        // Verde Proyecto GGL1
+  'Area_Proyecto_Oct2022': '#22C55E',               // Verde Proyecto GGL1 (legacy)
+  'Proyecto_GGL2': '#FB923C',                        // Naranja Claro Proyecto GGL2
+  'Area_Proyecto_GGL2_SinB10K120925': '#FB923C',    // Naranja Claro Proyecto GGL2 (legacy)
   'CampamentosGGF': '#EF4444'                       // Rojo Campamentos
 };
 
 function isLayerActiveInFilter(layerId, filter) {
   if (!filter || filter === 'ALL') return true;
   if (filter === 'Concesiones GGF') return layerId === 'Conseciones_unidos';
-  if (filter === 'Proyecto GGL1') return layerId === 'Area_Proyecto_Oct2022';
-  if (filter === 'Proyecto GGL2') return layerId === 'Area_Proyecto_GGL2_SinB10K120925';
+  if (filter === 'Proyecto GGL1') return layerId === 'Proyecto_GGL1' || layerId === 'Area_Proyecto_Oct2022';
+  if (filter === 'Proyecto GGL2') return layerId === 'Proyecto_GGL2' || layerId === 'Area_Proyecto_GGL2_SinB10K120925';
   if (filter === 'Campamentos GGF') return layerId === 'CampamentosGGF';
   return true;
 }
@@ -122,6 +124,8 @@ export default function MapViewer({ layers, initialFocusLayerId }) {
   const [layerVisibility, setLayerVisibility] = useState({});
   const [layerOpacities, setLayerOpacities] = useState({
     Conseciones_unidos: 0.45,
+    Proyecto_GGL1: 0.35,
+    Proyecto_GGL2: 0.35,
     Area_Proyecto_Oct2022: 0.35,
     Area_Proyecto_GGL2_SinB10K120925: 0.35,
     CampamentosGGF: 1.0
@@ -558,7 +562,7 @@ export default function MapViewer({ layers, initialFocusLayerId }) {
           } else if (activeProjectFilter === 'Proyecto GGL2') {
             sum += 158644.13;
           }
-        } else if (l.id === 'Area_Proyecto_GGL2_SinB10K120925' && (activeProjectFilter === 'ALL' || activeProjectFilter === 'Proyecto GGL2')) {
+        } else if ((l.id === 'Proyecto_GGL2' || l.id === 'Area_Proyecto_GGL2_SinB10K120925') && (activeProjectFilter === 'ALL' || activeProjectFilter === 'Proyecto GGL2')) {
           sum += l.totalHectares;
         }
       }

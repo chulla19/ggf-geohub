@@ -38,20 +38,36 @@ const LAYER_METADATA_CONFIG = {
     color: '#C27107', // RGB(194, 113, 7)
     tags: ['Concesiones GGF', 'Forestal', 'Carbono', 'Loreto 1 & 2']
   },
+  'Proyecto_GGL1': {
+    name: 'Proyecto GGL1',
+    project: 'Proyecto GGL1',
+    category: 'Límites & Cobertura',
+    description: 'Área del Proyecto GGL1 y cobertura vegetal con zonificación de bosque alto y fisiografía.',
+    color: '#22C55E', // Verde #22C55E
+    tags: ['Proyecto GGL1', 'Cobertura Vegetal', 'Fisiografía', 'Loreto 1']
+  },
   'Area_Proyecto_Oct2022': {
     name: 'Proyecto GGL1',
     project: 'Proyecto GGL1',
     category: 'Límites & Cobertura',
     description: 'Área del Proyecto GGL1 y cobertura vegetal (Línea base Oct 2022) con zonificación de bosque alto y fisiografía.',
-    color: '#FFB300', // RGB(255, 179, 0)
+    color: '#22C55E', // Verde #22C55E
     tags: ['Proyecto GGL1', 'Cobertura Vegetal', 'Fisiografía', 'Oct 2022']
+  },
+  'Proyecto_GGL2': {
+    name: 'Proyecto GGL2',
+    project: 'Proyecto GGL2',
+    category: 'Límites de Proyecto',
+    description: 'Área neta elegible del Proyecto GGL2 (Loreto 2) con exclusión de zona de amortiguamiento de 10 km / comunidades nativas.',
+    color: '#FB923C', // Naranja Claro #FB923C
+    tags: ['Proyecto GGL2', 'Área Neta', 'Loreto 2']
   },
   'Area_Proyecto_GGL2_SinB10K120925': {
     name: 'Proyecto GGL2',
     project: 'Proyecto GGL2',
     category: 'Límites de Proyecto',
     description: 'Área neta elegible del Proyecto GGL2 (Loreto 2) con exclusión de zona de amortiguamiento de 10 km / comunidades nativas.',
-    color: '#A5C639', // RGB(165, 198, 57)
+    color: '#FB923C', // Naranja Claro #FB923C
     tags: ['Proyecto GGL2', 'Área Neta', 'Buffer 10K', 'Loreto 2']
   },
   'CampamentosGGF': {
